@@ -7,7 +7,8 @@ Pour diagnostiquer un problème :
 - activez les erreurs Lua avec `/console scriptErrors 1` ;
 - rechargez avec `/reload` ;
 - testez `/mc help`, `/mc show`, puis `/mc reset` ;
-- la version 1.2.0 affiche des recommandations contextuelles de préparation et de combat, l'état des segments et le dernier rapport dans un panneau passif après `/mc show`, hors combat ;
+- après connexion, le message `Version 1.6.1 chargée` doit apparaître dans le chat ; utilisez `/mc diag` pour confirmer que le TOC et l'interface sont actifs ;
+- `/mc show` affiche toujours le panneau hors combat ; `/mc toggle` le masque ou l'affiche ;
 - `/mc report` imprime le dernier rapport dans le chat ;
 - `/mc details` imprime les conseils détaillés uniquement à la demande ;
 - `/mc mode discovery|support|progression` ajuste la densité d'aide ;

@@ -81,6 +81,27 @@ function ns:PrintQuickTip()
         or "À faire maintenant : reste en vie et observe la prochaine mécanique.")
 end
 
+function ns:PrintDiagnostic()
+    local loaded = false
+    if C_AddOns and C_AddOns.IsAddOnLoaded then
+        loaded = C_AddOns.IsAddOnLoaded("MidnightCompanion")
+    elseif IsAddOnLoaded then
+        loaded = IsAddOnLoaded("MidnightCompanion")
+    end
+    local version = "inconnue"
+    if C_AddOns and C_AddOns.GetAddOnMetadata then
+        version = C_AddOns.GetAddOnMetadata("MidnightCompanion", "Version") or version
+    elseif GetAddOnMetadata then
+        version = GetAddOnMetadata("MidnightCompanion", "Version") or version
+    end
+    self:Print(string.format("DIAG | chargé=%s | version=%s | UI=%s | combat=%s",
+        loaded and "oui" or "non",
+        version,
+        self.ShowPanel and "prête" or "absente",
+        self.State.inCombat and "oui" or "non"))
+    self:Print("DIAG | utilisez /mc show hors combat pour afficher le panneau.")
+end
+
 function ns:PrintRecommendations()
     self:RefreshIdentity()
     local roleData = self.Data.Roles[self.State.role] or self.Data.Roles.NONE
@@ -152,9 +173,19 @@ SlashCmdList.MIDNIGHTCOMPANION = function(message)
     if command == "show" or command == "" then
         ns:Print("Commande /mc show reçue.")
         ns:PrintQuickTip()
+        if ns.ShowPanel then
+            ns:ShowPanel()
+        else
+            ns:Print("Erreur : interface Midnight Companion absente.")
+        end
+    elseif command == "diag" or command == "diagnostic" then
+        ns:PrintDiagnostic()
+    elseif command == "toggle" then
         if ns.TogglePanel then ns:TogglePanel() end
     elseif command == "help" then
         ns:Print("/mc show - afficher les recommandations dans le chat")
+        ns:Print("/mc diag - vérifier le chargement et l'interface")
+        ns:Print("/mc toggle - afficher ou masquer le panneau")
         ns:Print("/midnightcompanion show - alias de /mc show")
         ns:Print("/mc reset - réinitialiser les compteurs de combat")
     elseif command == "reset" then
@@ -171,3 +202,10 @@ SlashCmdList.MIDNIGHTCOMPANION = function(message)
         ns:Print("Commande inconnue. Utilisez /mc help.")
     end
 end
+
+local startup = CreateFrame("Frame")
+startup:RegisterEvent("PLAYER_LOGIN")
+startup:SetScript("OnEvent", function()
+    ns:RefreshIdentity()
+    ns:Print("Version 1.6.1 chargée. /mc diag vérifie l'installation ; /mc show ouvre le panneau hors combat.")
+end)

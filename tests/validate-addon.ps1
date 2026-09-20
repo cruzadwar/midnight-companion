@@ -17,6 +17,10 @@ $core = Get-Content (Join-Path $root "Core.lua") -Raw
 foreach ($api in @("UnitClass", "GetSpecializationInfo", "UnitGroupRolesAssigned")) {
     if ($core -notmatch [regex]::Escape($api)) { throw "API de détection absente: $api" }
 }
+foreach ($command in @("PrintDiagnostic", "PLAYER_LOGIN", "/mc diag", "ShowPanel")) {
+    $combined = $core + (Get-Content (Join-Path $root "UI.lua") -Raw)
+    if ($combined -notmatch [regex]::Escape($command)) { throw "Diagnostic ou affichage absent: $command" }
+}
 
 $ui = Get-Content (Join-Path $root "UI.lua") -Raw
 if ($ui -match "SecureActionButton|BackdropTemplate|StartMoving|StopMovingOrSizing|SetMovable|RegisterForDrag|EnableMouse|SetAttribute") {

@@ -2,7 +2,7 @@
 
 Midnight Companion est un addon WoW **d'aide à la décision**, lisible en jeu et sans automatisation. Il identifie la classe, la spécialisation et le rôle du personnage, affiche des priorités contextuelles DPS/tank/soins, signale des événements de survie et produit un bref rapport après combat.
 
-Version actuelle : **1.6.0**
+Version actuelle : **1.6.1**
 
 Pour supprimer les anciennes copies Windows avant une nouvelle installation, utilisez le nettoyeur fourni :
 
@@ -22,7 +22,7 @@ La première commande fait uniquement un aperçu. Le nettoyage cible exclusiveme
 1. Téléchargez ou clonez ce dépôt.
 2. Copiez le dossier contenant `MidnightCompanion.toc`, `Core.lua`, `Combat.lua`, `Data.lua` et `UI.lua` dans `World of Warcraft/_retail_/Interface/AddOns/MidnightCompanion`.
 3. Relancez le jeu ou utilisez « Recharger » à l'écran de sélection.
-4. En jeu, utilisez `/mc show` pour afficher les recommandations dans le chat et `/mc help` pour les commandes.
+4. En jeu, vérifiez le chargement avec `/mc diag`, puis utilisez `/mc show` hors combat pour ouvrir le panneau. `/mc help` liste les commandes.
 
 ## Fonctionnalités du MVP
 
@@ -32,7 +32,7 @@ La première commande fait uniquement un aperçu. Le nettoyage cible exclusiveme
 - Segments de combat et de rencontre, historique borné des cinq derniers combats et rapport post-combat.
 - Conseils et identité disponibles à la demande avec `/mc show`.
 - Architecture data-driven (`Data.lua`) pour ajouter des entrées vérifiées par classe/spécialisation.
-- Version 1.6 : interface revue avec thème sombre, accents cyan/or, hiérarchie visuelle compacte et état du coach lisible en un coup d'œil. L'aide reste courte par défaut.
+- Version 1.6.1 : `/mc show` affiche désormais toujours le panneau au premier appel, `/mc diag` confirme le chargement du TOC et un message de démarrage est visible dans le chat.
 
 ## Limites et sécurité
 

@@ -28,6 +28,7 @@ end
 local function CreatePanel()
     if panel then return end
     panel = CreateFrame("Frame", "MidnightCompanionPanel", UIParent)
+    panel:Hide()
     panel:SetSize(500, 360)
     panel:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
     panel:SetFrameStrata("DIALOG")
@@ -57,17 +58,12 @@ local function CreatePanel()
     title:Show()
 end
 
-function ns:TogglePanel()
+function ns:ShowPanel()
     if InCombatLockdown() then
         ns:Print("Le panneau est disponible hors combat.")
         return
     end
     CreatePanel()
-    if panel:IsShown() then
-        panel:Hide()
-        ns:Print("Panneau masqué.")
-        return
-    end
     for _, line in ipairs(lines) do line:Hide() end
     wipe(lines)
 
@@ -108,4 +104,14 @@ function ns:TogglePanel()
     panel:Show()
     panel:Raise()
     ns:Print("Panneau Midnight Companion affiché.")
+end
+
+function ns:TogglePanel()
+    CreatePanel()
+    if panel:IsShown() then
+        panel:Hide()
+        ns:Print("Panneau masqué.")
+        return
+    end
+    self:ShowPanel()
 end
