@@ -2,6 +2,13 @@
 setlocal
 title Nettoyage Midnight Companion
 
+if /I "%~1"=="--worker" (
+    powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0Cleanup-MidnightCompanion.ps1" -Apply
+    echo.
+    pause
+    exit /b %errorlevel%
+)
+
 echo Recherche des anciennes copies de Midnight Companion...
 echo.
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0Cleanup-MidnightCompanion.ps1"
@@ -21,6 +28,9 @@ if errorlevel 2 (
 )
 
 echo.
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0Cleanup-MidnightCompanion.ps1" -Apply
-echo.
-pause
+set "workerDir=%TEMP%\MidnightCompanion-Cleanup-%RANDOM%"
+mkdir "%workerDir%" >nul 2>&1
+copy /Y "%~f0" "%workerDir%\Nettoyer-MidnightCompanion.cmd" >nul
+copy /Y "%~dp0Cleanup-MidnightCompanion.ps1" "%workerDir%\Cleanup-MidnightCompanion.ps1" >nul
+start "" "%workerDir%\Nettoyer-MidnightCompanion.cmd" --worker
+exit /b 0
