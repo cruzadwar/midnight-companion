@@ -64,6 +64,7 @@ function ui:Create()
 end
 
 function ui:Refresh()
+    if InCombatLockdown() then return end
     if not panel then self:Create() end
     Clear(body)
     local identity = FontString(body, 14, { 1, 0.82, 0.35 })
@@ -84,6 +85,7 @@ function ui:Refresh()
 end
 
 function ui:AddAlert(message)
+    if InCombatLockdown() then return end
     if not alerts then return end
     local text = FontString(alerts, 12, { 1, 0.35, 0.3 })
     text:SetText("Alerte : " .. message)
@@ -98,6 +100,7 @@ function ui:AddAlert(message)
 end
 
 function ui:BuildReport()
+    if InCombatLockdown() then return end
     if not report then return end
     Clear(report)
     local state = ns.State
@@ -117,6 +120,10 @@ function ui:BuildReport()
 end
 
 function ui:Toggle()
+    if InCombatLockdown() then
+        ns:Print("Interface indisponible pendant le combat.")
+        return
+    end
     if not panel then self:Create() end
     if panel:IsShown() then panel:Hide() else self:Refresh(); panel:Show() end
 end
