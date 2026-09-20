@@ -1,4 +1,4 @@
-## Interface: 110100
+## Interface: 120000
 ## Title: Midnight Companion
 ## Notes: Contextual, non-automated combat coaching for World of Warcraft: Midnight
 ## Author: cruzadwar
