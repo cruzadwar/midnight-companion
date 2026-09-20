@@ -38,6 +38,9 @@ function ns:RefreshIdentity()
     self.State.specID = specID
     self.State.specName = specName
     self.State.role = SafeRole()
+    if self.UI and self.UI.Refresh and not InCombatLockdown() then
+        self.UI:Refresh()
+    end
 end
 
 function ns:GetIdentityLine()
@@ -73,7 +76,7 @@ SlashCmdList.MIDNIGHTCOMPANION = function(message)
     local command = string.lower(strtrim(message or ""))
     if command == "show" or command == "" then
         ns:RefreshIdentity()
-        ns:PrintRecommendations()
+        if ns.UI then ns.UI:Toggle() else ns:PrintRecommendations() end
     elseif command == "help" then
         ns:Print("/mc show - afficher les recommandations dans le chat")
         ns:Print("/mc reset - réinitialiser les compteurs de combat")

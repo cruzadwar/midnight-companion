@@ -16,6 +16,7 @@ combatEvents:SetScript("OnEvent", function(_, event)
         local duration = ns.State.combatStart and math.max(0, GetTime() - ns.State.combatStart) or 0
         Message(string.format("Rapport : %.0fs, dégâts subis %d, interruptions %d, dispels %d, morts %d.",
             duration, ns.State.damageTaken, ns.State.interrupts, ns.State.dispels, ns.State.deaths))
+        if ns.UI and ns.UI.Refresh then ns.UI:Refresh() end
     elseif event == "COMBAT_LOG_EVENT_UNFILTERED" then
         local _, subEvent, _, sourceGUID, _, _, _, destGUID, _, _, _, amount =
             CombatLogGetCurrentEventInfo()
