@@ -14,7 +14,7 @@ echo.
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0Cleanup-MidnightCompanion.ps1"
 if errorlevel 1 (
     echo.
-    echo Fermez completement WoW et Battle.net, puis relancez ce fichier.
+    echo Fermez completement WoW, puis relancez ce fichier.
     pause
     exit /b 1
 )

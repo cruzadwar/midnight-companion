@@ -6,7 +6,8 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-$running = @(Get-Process -Name "Wow", "WowClassic" -ErrorAction SilentlyContinue)
+$running = @(Get-Process -ErrorAction SilentlyContinue |
+    Where-Object { $_.ProcessName -like "Wow*" })
 if ($running.Count -gt 0) {
     $names = ($running | Select-Object -ExpandProperty ProcessName -Unique) -join ", "
     Write-Error "Le nettoyage est bloque car WoW est encore ouvert : $names. Fermez le jeu, puis relancez le nettoyeur."
@@ -86,7 +87,21 @@ if (-not $Apply) {
 
 foreach ($target in $targets) {
     if ($PSCmdlet.ShouldProcess($target, "Supprimer cette copie MidnightCompanion")) {
-        Remove-Item -LiteralPath $target -Recurse -Force
-        Write-Output "Supprimé : $target"
+        $removed = $false
+        for ($attempt = 1; $attempt -le 3; $attempt++) {
+            try {
+                Remove-Item -LiteralPath $target -Recurse -Force -ErrorAction Stop
+                $removed = $true
+                Write-Output "Supprimé : $target"
+                break
+            } catch {
+                if ($attempt -lt 3) {
+                    Write-Output "Fichier encore verrouillé, nouvelle tentative dans 2 secondes..."
+                    Start-Sleep -Seconds 2
+                } else {
+                    Write-Error "Impossible de supprimer $target. Fermez WoW, l'Explorateur Windows ouvert sur ce dossier et tout terminal situé dans ce dossier, puis relancez."
+                }
+            }
+        }
     }
 }
