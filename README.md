@@ -2,7 +2,7 @@
 
 Midnight Companion est un addon WoW **d'aide à la décision**, lisible en jeu et sans automatisation. Il identifie la classe, la spécialisation et le rôle du personnage, affiche des priorités contextuelles DPS/tank/soins, signale des événements de survie et produit un bref rapport après combat.
 
-Version actuelle : **1.3.0**
+Version actuelle : **1.5.0**
 
 Pour supprimer les anciennes copies Windows avant une nouvelle installation, utilisez le nettoyeur fourni :
 
@@ -32,7 +32,7 @@ La première commande fait uniquement un aperçu. Le nettoyage cible exclusiveme
 - Segments de combat et de rencontre, historique borné des cinq derniers combats et rapport post-combat.
 - Conseils et identité disponibles à la demande avec `/mc show`.
 - Architecture data-driven (`Data.lua`) pour ajouter des entrées vérifiées par classe/spécialisation.
-- Version 1.3 : panneau nommé et explicitement rendu au premier plan avec fond opaque et titre fixe. Le chat confirme toujours la réception de `/mc show` pour faciliter le diagnostic.
+- Version 1.5 : affichage court par défaut : une seule action immédiate et une phrase de contexte. `/mc details` affiche les informations longues uniquement à la demande. Le joueur peut choisir `discovery`, `support` ou `progression` avec `/mc mode <nom>`.
 
 ## Limites et sécurité
 

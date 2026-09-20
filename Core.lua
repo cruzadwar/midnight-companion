@@ -19,6 +19,7 @@ ns.State = {
     challengeActive = false,
     lastReport = nil,
     history = {},
+    mode = "support",
 }
 
 local function SafeRole()
@@ -62,6 +63,15 @@ function ns:ResetCombat()
     self.State.mechanics = 0
 end
 
+function ns:SetMode(mode)
+    if not self.Data.Modes[mode] then
+        self:Print("Modes : discovery, support, progression.")
+        return
+    end
+    self.State.mode = mode
+    self:Print("Mode d'aide : " .. self.Data.Modes[mode].label)
+end
+
 function ns:PrintRecommendations()
     self:RefreshIdentity()
     local roleData = self.Data.Roles[self.State.role] or self.Data.Roles.NONE
@@ -69,6 +79,15 @@ function ns:PrintRecommendations()
     self:Print(self:GetIdentityLine())
     for _, priority in ipairs(roleData.priorities) do
         self:Print("Priorité : " .. priority)
+    end
+
+    function ns:PrintQuickTip()
+        self:RefreshIdentity()
+        local recommendations = self:GetContextualRecommendations()
+        local first = recommendations[1]
+        self:Print(self:GetIdentityLine())
+        self:Print((first and ("À faire maintenant : " .. first.text))
+            or "À faire maintenant : reste en vie et observe la prochaine mécanique.")
     end
 
     self:Print("Survie : " .. roleData.survival)
@@ -97,13 +116,16 @@ end
 
 function ns:GetContextualRecommendations()
     local roleData = self.Data.Roles[self.State.role] or self.Data.Roles.NONE
+    local modeData = self.Data.Modes[self.State.mode] or self.Data.Modes.support
     local result = {}
     local function add(priority, text)
         result[#result + 1] = { priority = priority, text = text }
     end
 
     if self.State.inCombat then
-        add("URGENT", "Mécanique d'abord : déplace-toi et reste vivant avant de chercher l'optimisation.")
+        add("URGENT", self.State.mode == "discovery"
+            and "Regarde l'indication principale et reste en vie ; tu n'as pas besoin de tout gérer d'un coup."
+            or "Mécanique d'abord : déplace-toi et reste vivant avant de chercher l'optimisation.")
         if self.State.role == "HEALER" then
             add("SOINS", "Stabilise les alliés en danger, puis reprends ton cycle.")
         elseif self.State.role == "TANK" then
@@ -115,7 +137,8 @@ function ns:GetContextualRecommendations()
             add("RENCONTRE", "Rencontre active : " .. self.State.encounterName)
         end
     else
-        add("PRÉPARATION", "Vérifie ta position, tes consommables et tes raccourcis avant d'engager.")
+        add("PRÉPARATION", modeData.description)
+        add("PRIORITÉ", modeData.priorities[1])
         add("OBJECTIF", roleData.priorities[1])
         add("DONNÉES", "Aucune recommandation de sort ou de talent n'est inventée sans données de patch vérifiées.")
     end
@@ -128,7 +151,7 @@ SlashCmdList.MIDNIGHTCOMPANION = function(message)
     local command = string.lower(strtrim(message or ""))
     if command == "show" or command == "" then
         ns:Print("Commande /mc show reçue.")
-        ns:PrintRecommendations()
+        ns:PrintQuickTip()
         if ns.TogglePanel then ns:TogglePanel() end
     elseif command == "help" then
         ns:Print("/mc show - afficher les recommandations dans le chat")
@@ -139,6 +162,11 @@ SlashCmdList.MIDNIGHTCOMPANION = function(message)
         ns:Print("Compteurs de combat réinitialisés.")
     elseif command == "report" then
         if ns.PrintReport then ns:PrintReport() else ns:Print("Aucun rapport disponible.") end
+    elseif command == "mode" then
+        local mode = string.lower(strtrim(message or ""):gsub("^mode%s*", ""))
+        ns:SetMode(mode)
+    elseif command == "details" then
+        ns:PrintRecommendations()
     else
         ns:Print("Commande inconnue. Utilisez /mc help.")
     end

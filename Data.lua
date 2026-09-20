@@ -56,6 +56,33 @@ ns.Data.Talents = {
     "No talent is recommended until a verified Midnight data entry is added.",
 }
 
+ns.Data.Modes = {
+    discovery = {
+        label = "Découverte",
+        description = "Explique le jeu simplement, sans jargon ni pression.",
+        priorities = {
+            "Observe la mécanique et suis l'indication la plus importante.",
+            "Reste en vie et aide le groupe ; la performance viendra ensuite.",
+        },
+    },
+    support = {
+        label = "Accompagnement",
+        description = "Une priorité claire à la fois, avec des conseils courts.",
+        priorities = {
+            "Choisis une seule amélioration pour la prochaine tentative.",
+            "Utilise une défense ou un outil de groupe avant le danger prévisible.",
+        },
+    },
+    progression = {
+        label = "Progression",
+        description = "Relie rôle, placement, survie et objectifs de rencontre.",
+        priorities = {
+            "Corrige d'abord la mécanique qui coûte une tentative.",
+            "Prépare ton prochain temps de recharge autour du moment dangereux.",
+        },
+    },
+}
+
 -- These are deliberately non-rotational prompts. They remain useful without
 -- pretending to know a patch-specific build, encounter, or spell priority.
 ns.Data.ClassHints = {

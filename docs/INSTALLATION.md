@@ -9,6 +9,8 @@ Pour diagnostiquer un problème :
 - testez `/mc help`, `/mc show`, puis `/mc reset` ;
 - la version 1.2.0 affiche des recommandations contextuelles de préparation et de combat, l'état des segments et le dernier rapport dans un panneau passif après `/mc show`, hors combat ;
 - `/mc report` imprime le dernier rapport dans le chat ;
+- `/mc details` imprime les conseils détaillés uniquement à la demande ;
+- `/mc mode discovery|support|progression` ajuste la densité d'aide ;
 - ne conservez qu'un seul dossier `MidnightCompanion` dans `Interface\AddOns` après chaque mise à jour.
 - vérifiez que le journal de combat est disponible pour les compteurs.
 

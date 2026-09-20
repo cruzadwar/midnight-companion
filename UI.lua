@@ -19,7 +19,7 @@ end
 local function CreatePanel()
     if panel then return end
     panel = CreateFrame("Frame", "MidnightCompanionPanel", UIParent)
-    panel:SetSize(520, 560)
+    panel:SetSize(460, 330)
     panel:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
     panel:SetFrameStrata("DIALOG")
     panel:SetFrameLevel(100)
@@ -58,10 +58,13 @@ function ns:TogglePanel()
     end
     AddLine("Coach de jeu actif", 16, { 0.45, 0.85, 1 }, -48)
     AddLine(data.identity, 14, { 1, 0.82, 0.35 }, -52)
-    AddLine(data.combat.inCombat and "COACHING EN COMBAT" or "PRÉPARATION", 11, { 0.45, 0.75, 0.95 }, -82)
+    local modeData = ns.Data.Modes[ns.State.mode] or ns.Data.Modes.support
+    AddLine((data.combat.inCombat and "COACHING EN COMBAT" or "PRÉPARATION")
+        .. " • " .. modeData.label, 11, { 0.45, 0.75, 0.95 }, -82)
 
     local y = -108
-    for _, recommendation in ipairs(data.recommendations) do
+    for index, recommendation in ipairs(data.recommendations) do
+        if index > 1 then break end
         local color = recommendation.priority == "URGENT" and { 1, 0.35, 0.3 }
             or recommendation.priority == "DÉFENSE" and { 1, 0.65, 0.25 }
             or { 0.92, 0.92, 0.92 }
@@ -74,32 +77,14 @@ function ns:TogglePanel()
         AddLine("Repère classe : " .. data.classHint, 11, { 0.84, 0.9, 0.96 }, y)
         y = y - 42
     end
-    AddLine("ÉQUIPEMENT & TALENTS", 11, { 0.45, 0.75, 0.95 }, y)
-    y = y - 26
-    AddLine("• " .. data.equipment[1], 11, { 0.75, 0.82, 0.9 }, y)
-    y = y - 32
-    AddLine("• " .. data.equipment[2], 11, { 0.75, 0.82, 0.9 }, y)
-    y = y - 32
-    AddLine("• " .. data.talents[1], 11, { 0.75, 0.82, 0.9 }, y)
-    y = y - 32
-    AddLine("Données patch : " .. data.talents[3], 10, { 0.62, 0.68, 0.76 }, y)
-    y = y - 36
-    AddLine("ÉTAT DU COMBAT", 11, { 0.45, 0.75, 0.95 }, y)
-    y = y - 28
+    y = y - 24
     if data.combat.inCombat then
         local duration = data.combat.combatStart and (GetTime() - data.combat.combatStart) or 0
         AddLine(string.format("• En combat depuis %.0fs", duration), 11, { 1, 0.45, 0.35 }, y)
     else
         AddLine("• Hors combat : prêt pour la prochaine rencontre", 11, { 0.55, 0.85, 0.6 }, y)
     end
-    y = y - 30
-    if data.combat.lastReport then
-        AddLine("• Dernier rapport : " .. data.combat.lastReport.summary, 11, { 0.8, 0.86, 0.92 }, y)
-    else
-        AddLine("• Aucun rapport post-combat disponible", 11, { 0.62, 0.68, 0.76 }, y)
-    end
-    y = y - 30
-    AddLine("Historique conservé : " .. #data.combat.history .. "/5", 10, { 0.62, 0.68, 0.76 }, y)
+    AddLine("Conseil court. Tape /mc details pour le détail.", 10, { 0.62, 0.68, 0.76 }, y - 30)
     panel:Show()
     panel:Raise()
     ns:Print("Panneau Midnight Companion affiché.")
