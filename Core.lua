@@ -82,6 +82,7 @@ end
 
 function ns:GetRecommendationData()
     self:RefreshIdentity()
+    local recommendations = self:GetContextualRecommendations()
     return {
         identity = self:GetIdentityLine(),
         role = self.State.role,
@@ -90,7 +91,35 @@ function ns:GetRecommendationData()
         equipment = self.Data.Equipment,
         talents = self.Data.Talents,
         combat = self.State,
+        recommendations = recommendations,
     }
+end
+
+function ns:GetContextualRecommendations()
+    local roleData = self.Data.Roles[self.State.role] or self.Data.Roles.NONE
+    local result = {}
+    local function add(priority, text)
+        result[#result + 1] = { priority = priority, text = text }
+    end
+
+    if self.State.inCombat then
+        add("URGENT", "Mécanique d'abord : déplace-toi et reste vivant avant de chercher l'optimisation.")
+        if self.State.role == "HEALER" then
+            add("SOINS", "Stabilise les alliés en danger, puis reprends ton cycle.")
+        elseif self.State.role == "TANK" then
+            add("DÉFENSE", "Garde une mitigation ou une réponse défensive pour le prochain pic.")
+        else
+            add("DPS", "Conserve ton uptime uniquement depuis une position sûre.")
+        end
+        if self.State.encounterName then
+            add("RENCONTRE", "Rencontre active : " .. self.State.encounterName)
+        end
+    else
+        add("PRÉPARATION", "Vérifie ta position, tes consommables et tes raccourcis avant d'engager.")
+        add("OBJECTIF", roleData.priorities[1])
+        add("DONNÉES", "Aucune recommandation de sort ou de talent n'est inventée sans données de patch vérifiées.")
+    end
+    return result
 end
 
 SLASH_MIDNIGHTCOMPANION1 = "/mc"

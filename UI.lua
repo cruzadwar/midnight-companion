@@ -45,14 +45,17 @@ function ns:TogglePanel()
         local line = AddText(text, size, color, y)
         table.insert(lines, line)
     end
-    AddLine("Midnight Companion", 20, { 0.44, 0.84, 1 }, -20)
+    AddLine("Midnight Companion 1.2", 20, { 0.44, 0.84, 1 }, -20)
     AddLine(data.identity, 14, { 1, 0.82, 0.35 }, -52)
-    AddLine("PRIORITÉS DE JEU", 11, { 0.45, 0.75, 0.95 }, -82)
+    AddLine(data.combat.inCombat and "COACHING EN COMBAT" or "PRÉPARATION", 11, { 0.45, 0.75, 0.95 }, -82)
 
     local y = -108
-    for _, priority in ipairs(data.roleData.priorities) do
-        AddLine("• " .. priority, 12, { 0.92, 0.92, 0.92 }, y)
-        y = y - 38
+    for _, recommendation in ipairs(data.recommendations) do
+        local color = recommendation.priority == "URGENT" and { 1, 0.35, 0.3 }
+            or recommendation.priority == "DÉFENSE" and { 1, 0.65, 0.25 }
+            or { 0.92, 0.92, 0.92 }
+        AddLine("[" .. recommendation.priority .. "] " .. recommendation.text, 12, color, y)
+        y = y - 40
     end
     AddLine("Survie : " .. data.roleData.survival, 12, { 1, 0.55, 0.35 }, y)
     y = y - 40
