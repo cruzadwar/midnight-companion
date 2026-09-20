@@ -39,8 +39,16 @@ function ui:Create()
     panel:SetMovable(true)
     panel:EnableMouse(true)
     panel:RegisterForDrag("LeftButton")
-    panel:SetScript("OnDragStart", panel.StartMoving)
-    panel:SetScript("OnDragStop", panel.StopMovingOrSizing)
+    panel:SetScript("OnDragStart", function(frame)
+        if not InCombatLockdown() then
+            frame:StartMoving()
+        end
+    end)
+    panel:SetScript("OnDragStop", function(frame)
+        if not InCombatLockdown() then
+            frame:StopMovingOrSizing()
+        end
+    end)
     panel:SetBackdrop({
         bgFile = "Interface/Tooltips/UI-Tooltip-Background",
         edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
