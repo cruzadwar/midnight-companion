@@ -20,4 +20,6 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tools\Cleanup-Midnight
 
 Si la liste est correcte, ajoutez `-Apply` pour supprimer uniquement les dossiers `MidnightCompanion` et `MidnightCompanion-*`. Le script ne supprime aucun autre addon et ne parcourt pas tout le disque.
 
+Pour une exécution par double-clic, utilisez `tools\Nettoyer-MidnightCompanion.cmd`. N'ouvrez pas directement le fichier `.ps1` dans l'éditeur Windows.
+
 Les recommandations de classe et de spécialisation doivent être ajoutées uniquement avec une source vérifiable pour le patch ciblé. Une donnée inconnue doit rester vide afin d'éviter de pousser un joueur vers une action incorrecte.
