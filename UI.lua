@@ -4,10 +4,11 @@ local ui = {}
 ns.UI = ui
 
 local panel
-local content
+local lines = {}
+local open = false
 
 local function AddText(text, size, color, y)
-    local line = content:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+    local line = panel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
     line:SetFont(line:GetFont(), size)
     line:SetTextColor(color[1], color[2], color[3])
     line:SetJustifyH("LEFT")
@@ -20,11 +21,10 @@ end
 
 function ui:Create()
     if panel then return end
-    -- Plain anonymous frame: no secure template, no Blizzard frame mutation.
-    panel = CreateFrame("Frame", nil, UIParent)
+    -- One anonymous normal frame. No secure template and no Blizzard frame mutation.
+    panel = CreateFrame("Frame", nil, nil)
     panel:SetSize(380, 430)
-    panel:SetPoint("CENTER")
-    panel:SetClampedToScreen(true)
+    panel:SetPoint("CENTER", UIParent, "CENTER")
 
     local background = panel:CreateTexture(nil, "BACKGROUND")
     background:SetAllPoints()
@@ -35,33 +35,34 @@ function ui:Create()
     border:SetPoint("BOTTOMRIGHT", -1, 1)
     border:SetColorTexture(0.25, 0.55, 0.75, 0.35)
 
-    content = CreateFrame("Frame", nil, panel)
-    content:SetPoint("TOPLEFT", 18, -18)
-    content:SetSize(344, 394)
-    panel:Hide()
 end
 
 function ui:Refresh()
     if InCombatLockdown() then return end
     self:Create()
-    for _, child in ipairs({ content:GetChildren() }) do child:Hide() end
+    for _, line in ipairs(lines) do line:Hide() end
+    wipe(lines)
 
     local state = ns.State
     local roleData = ns.Data.Roles[state.role] or ns.Data.Roles.NONE
     local identity = ns:GetIdentityLine()
-    AddText("Midnight Companion 0.5.0", 18, { 0.44, 0.84, 1 }, 0)
-    AddText(identity, 14, { 1, 0.82, 0.35 }, -30)
+    local function AddLine(text, size, color, y)
+        local line = AddText(text, size, color, y)
+        table.insert(lines, line)
+    end
+    AddLine("Midnight Companion 0.5.2", 18, { 0.44, 0.84, 1 }, -18)
+    AddLine(identity, 14, { 1, 0.82, 0.35 }, -48)
 
-    local y = -62
+    local y = -80
     for _, priority in ipairs(roleData.priorities) do
-        AddText("• " .. priority, 12, { 0.9, 0.9, 0.9 }, y)
+        AddLine("• " .. priority, 12, { 0.9, 0.9, 0.9 }, y)
         y = y - 42
     end
-    AddText("Survie : " .. roleData.survival, 12, { 1, 0.55, 0.35 }, y)
+    AddLine("Survie : " .. roleData.survival, 12, { 1, 0.55, 0.35 }, y)
     y = y - 42
-    AddText("Équipement : " .. ns.Data.Equipment[1], 11, { 0.75, 0.82, 0.9 }, y)
+    AddLine("Équipement : " .. ns.Data.Equipment[1], 11, { 0.75, 0.82, 0.9 }, y)
     y = y - 34
-    AddText("Talents : " .. ns.Data.Talents[3], 11, { 0.75, 0.82, 0.9 }, y)
+    AddLine("Talents : " .. ns.Data.Talents[3], 11, { 0.75, 0.82, 0.9 }, y)
 end
 
 function ui:Toggle()
@@ -70,10 +71,12 @@ function ui:Toggle()
         return
     end
     self:Create()
-    if panel:IsShown() then
+    if open then
         panel:Hide()
+        open = false
     else
         self:Refresh()
         panel:Show()
+        open = true
     end
 end
