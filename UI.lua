@@ -22,12 +22,12 @@ local function CreatePanel()
     panel = CreateFrame("Frame", nil, UIParent)
     panel:SetSize(430, 500)
     panel:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+    panel:SetFrameStrata("DIALOG")
+    panel:SetToplevel(true)
 
     local background = panel:CreateTexture(nil, "BACKGROUND")
     background:SetAllPoints()
     background:SetColorTexture(0.02, 0.03, 0.06, 0.97)
-    panel:SetFrameStrata("MEDIUM")
-
 end
 
 function ns:TogglePanel()
@@ -36,7 +36,11 @@ function ns:TogglePanel()
         return
     end
     CreatePanel()
-    if panel:IsShown() then panel:Hide(); return end
+    if panel:IsShown() then
+        panel:Hide()
+        ns:Print("Panneau masqué.")
+        return
+    end
     for _, line in ipairs(lines) do line:Hide() end
     wipe(lines)
 
@@ -90,4 +94,6 @@ function ns:TogglePanel()
     y = y - 30
     AddLine("Historique conservé : " .. #data.combat.history .. "/5", 10, { 0.62, 0.68, 0.76 }, y)
     panel:Show()
+    panel:Raise()
+    ns:Print("Panneau Midnight Companion affiché.")
 end

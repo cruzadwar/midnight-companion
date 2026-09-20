@@ -123,13 +123,16 @@ function ns:GetContextualRecommendations()
 end
 
 SLASH_MIDNIGHTCOMPANION1 = "/mc"
+SLASH_MIDNIGHTCOMPANION2 = "/midnightcompanion"
 SlashCmdList.MIDNIGHTCOMPANION = function(message)
     local command = string.lower(strtrim(message or ""))
     if command == "show" or command == "" then
+        ns:Print("Commande /mc show reçue.")
         ns:PrintRecommendations()
         if ns.TogglePanel then ns:TogglePanel() end
     elseif command == "help" then
         ns:Print("/mc show - afficher les recommandations dans le chat")
+        ns:Print("/midnightcompanion show - alias de /mc show")
         ns:Print("/mc reset - réinitialiser les compteurs de combat")
     elseif command == "reset" then
         ns:ResetCombat()
