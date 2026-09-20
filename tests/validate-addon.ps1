@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
-$required = @("MidnightCompanion.toc", "Data.lua", "Core.lua")
+$required = @("MidnightCompanion.toc", "Data.lua", "Core.lua", "UI.lua")
 
 foreach ($file in $required) {
     $path = Join-Path $root $file
@@ -18,7 +18,10 @@ foreach ($api in @("UnitClass", "GetSpecializationInfo", "UnitGroupRolesAssigned
     if ($core -notmatch [regex]::Escape($api)) { throw "API de détection absente: $api" }
 }
 
-if ($core -match "CreateFrame|RegisterEvent|SetScript") { throw "Frame ou événement présent dans le mode diagnostic" }
+$ui = Get-Content (Join-Path $root "UI.lua") -Raw
+if ($ui -match "SecureActionButton|BackdropTemplate|StartMoving|StopMovingOrSizing|SetMovable|RegisterForDrag|EnableMouse|SetAttribute") {
+    throw "API d'interface protégée détectée"
+}
 $ui = Get-Content (Join-Path $root "UI.lua") -Raw
 if ($ui -match "BackdropTemplate|SecureActionButton|StartMoving|StopMovingOrSizing|SetMovable|RegisterForDrag|EnableMouse|SetAttribute") {
     throw "API d'interface protégée détectée"
