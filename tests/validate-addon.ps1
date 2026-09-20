@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
-$required = @("MidnightCompanion.toc", "Data.lua", "Core.lua", "Combat.lua", "UI.lua")
+$required = @("MidnightCompanion.toc", "Data.lua", "Core.lua", "Combat.lua")
 
 foreach ($file in $required) {
     $path = Join-Path $root $file

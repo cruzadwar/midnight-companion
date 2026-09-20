@@ -2,11 +2,7 @@ local _, ns = ...
 local combat = CreateFrame("Frame")
 ns.Combat = combat
 
-local function CombatMessage(message)
-    if ns.UI and ns.UI.AddAlert then
-        ns.UI:AddAlert(message)
-    end
-end
+local function CombatMessage(message) ns:Print(message) end
 
 combat:SetScript("OnEvent", function(_, event, ...)
     if event == "PLAYER_REGEN_DISABLED" then
@@ -14,13 +10,12 @@ combat:SetScript("OnEvent", function(_, event, ...)
         ns.State.combatStart = GetTime()
         ns:ResetCombat()
         CombatMessage("Combat commencé : priorité à la mécanique et à la survie.")
-        if ns.UI then ns.UI:Refresh() end
+        ns:PrintRecommendations()
     elseif event == "PLAYER_REGEN_ENABLED" then
         ns.State.inCombat = false
-        if ns.UI then
-            ns.UI:BuildReport()
-            ns.UI:Refresh()
-        end
+        local duration = ns.State.combatStart and math.max(0, GetTime() - ns.State.combatStart) or 0
+        ns:Print(string.format("Rapport : %.0fs, dégâts subis %d, interruptions %d, dispels %d, morts %d.",
+            duration, ns.State.damageTaken, ns.State.interrupts, ns.State.dispels, ns.State.deaths))
     elseif event == "COMBAT_LOG_EVENT_UNFILTERED" then
         local _, subEvent, _, sourceGUID, _, _, _, destGUID, _, _, _, amount =
             CombatLogGetCurrentEventInfo()

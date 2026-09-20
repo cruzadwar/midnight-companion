@@ -39,9 +39,6 @@ function ns:RefreshIdentity()
     self.State.specID = specID
     self.State.specName = specName
     self.State.role = SafeRole()
-    if self.UI and self.UI.Refresh then
-        self.UI:Refresh()
-    end
 end
 
 function ns:GetIdentityLine()
@@ -63,6 +60,15 @@ function ns:Print(message)
     DEFAULT_CHAT_FRAME:AddMessage("|cff70d6ffMidnight Companion|r: " .. message)
 end
 
+function ns:PrintRecommendations()
+    local roleData = self.Data.Roles[self.State.role] or self.Data.Roles.NONE
+    self:Print(self:GetIdentityLine())
+    for _, priority in ipairs(roleData.priorities) do
+        self:Print("Priorité : " .. priority)
+    end
+    self:Print("Survie : " .. roleData.survival)
+end
+
 SLASH_MIDNIGHTCOMPANION1 = "/mc"
 SlashCmdList.MIDNIGHTCOMPANION = function(message)
     local command = string.lower(strtrim(message or ""))
@@ -70,7 +76,7 @@ SlashCmdList.MIDNIGHTCOMPANION = function(message)
         ns:ResetCombat()
         ns:Print("Statistiques de combat réinitialisées.")
     elseif command == "show" or command == "" then
-        if ns.UI then ns.UI:Toggle() end
+        ns:PrintRecommendations()
     elseif command == "help" then
         ns:Print("/mc show - afficher ou masquer le panneau")
         ns:Print("/mc reset - réinitialiser les statistiques du combat")

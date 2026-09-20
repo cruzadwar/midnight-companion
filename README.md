@@ -2,7 +2,7 @@
 
 Midnight Companion est un addon WoW **d'aide à la décision**, lisible en jeu et sans automatisation. Il identifie la classe, la spécialisation et le rôle du personnage, affiche des priorités contextuelles DPS/tank/soins, signale des événements de survie et produit un bref rapport après combat.
 
-Version actuelle : **0.1.3**
+Version actuelle : **0.2.0**
 
 ## Installation
 
@@ -14,19 +14,18 @@ Version actuelle : **0.1.3**
 ## Fonctionnalités du MVP
 
 - Détection via les API natives `UnitClass`, `GetSpecializationInfo` et `UnitGroupRolesAssigned`.
-- Conseils génériques séparés par rôle, avec un état sûr quand aucune donnée n'est disponible.
+- Conseils génériques séparés par rôle, avec un état sûr quand aucune donnée n'est disponible, via le chat `/mc`.
 - Alertes non intrusives lors de l'entrée en combat et après une mort détectée.
 - Compteurs de dégâts subis, morts, interruptions et dispels tirés du journal de combat.
 - Rapport post-combat avec durée et actions prioritaires.
 - Architecture data-driven (`Data.lua`) pour ajouter des entrées vérifiées par classe/spécialisation.
-- Panneau fixe sans fonctions d'interface protégées, pour rester compatible avec les restrictions Blizzard.
-- Aucune modification de l'interface n'est effectuée pendant un combat ; les données sont affichées après sa fin.
+- Mode sans panneau custom : aucune frame parentée à l'UI Blizzard n'est créée, afin d'éviter toute contamination d'interface.
 
 ## Limites et sécurité
 
 L'addon ne lance aucun sort, ne cible aucune unité, ne clique pas à la place du joueur et ne prend pas de décision automatisée. Il n'intègre pas encore de base de données de rencontres, de simulation d'équipement ou de recommandations de talents spécifiques au patch. Ces données doivent être ajoutées après vérification dans le jeu et peuvent changer avec chaque correctif.
 
-Le champ `## Interface` du fichier TOC doit être ajusté si Blizzard change le numéro d'interface de Midnight. Les métriques du journal de combat sont volontairement limitées aux événements que l'API expose de manière stable.
+Le champ `## Interface` du fichier TOC doit être ajusté si Blizzard change le numéro d'interface de Midnight. Les métriques du journal de combat sont volontairement limitées aux événements que l'API expose de manière stable. La version 0.2.0 privilégie le chat aux panneaux custom pour éviter les restrictions de sécurité de l'interface Blizzard.
 
 ## Ajouter des données vérifiées
 
