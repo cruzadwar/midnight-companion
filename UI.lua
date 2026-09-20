@@ -18,16 +18,23 @@ end
 
 local function CreatePanel()
     if panel then return end
-    -- One anonymous normal frame. No secure template and no Blizzard frame mutation.
-    panel = CreateFrame("Frame", nil, UIParent)
-    panel:SetSize(430, 500)
+    panel = CreateFrame("Frame", "MidnightCompanionPanel", UIParent)
+    panel:SetSize(520, 560)
     panel:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
     panel:SetFrameStrata("DIALOG")
+    panel:SetFrameLevel(100)
     panel:SetToplevel(true)
+    panel:SetAlpha(1)
 
     local background = panel:CreateTexture(nil, "BACKGROUND")
     background:SetAllPoints()
-    background:SetColorTexture(0.02, 0.03, 0.06, 0.97)
+    background:SetColorTexture(0.02, 0.03, 0.06, 1)
+
+    local title = panel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+    title:SetPoint("TOPLEFT", 20, -18)
+    title:SetText("MIDNIGHT COMPANION")
+    title:SetTextColor(0.45, 0.85, 1)
+    title:Show()
 end
 
 function ns:TogglePanel()
@@ -49,7 +56,7 @@ function ns:TogglePanel()
         local line = AddText(text, size, color, y)
         table.insert(lines, line)
     end
-    AddLine("Midnight Companion 1.2", 20, { 0.44, 0.84, 1 }, -20)
+    AddLine("Coach de jeu actif", 16, { 0.45, 0.85, 1 }, -48)
     AddLine(data.identity, 14, { 1, 0.82, 0.35 }, -52)
     AddLine(data.combat.inCombat and "COACHING EN COMBAT" or "PRÉPARATION", 11, { 0.45, 0.75, 0.95 }, -82)
 
