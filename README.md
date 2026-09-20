@@ -2,7 +2,7 @@
 
 Midnight Companion est un addon WoW **d'aide à la décision**, lisible en jeu et sans automatisation. Il identifie la classe, la spécialisation et le rôle du personnage, affiche des priorités contextuelles DPS/tank/soins, signale des événements de survie et produit un bref rapport après combat.
 
-Version actuelle : **0.5.7**
+Version actuelle : **0.5.8**
 
 Pour supprimer les anciennes copies Windows avant une nouvelle installation, utilisez le nettoyeur fourni :
 
@@ -11,7 +11,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tools\Cleanup-Midnight
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tools\Cleanup-MidnightCompanion.ps1 -Apply
 ```
 
-Vous pouvez aussi double-cliquer sur `tools\Nettoyer-MidnightCompanion.cmd`. Il affiche d'abord les copies trouvées, puis demande une confirmation avant suppression. Le lanceur se copie temporairement hors du dossier addon avant de le supprimer, car Windows ne peut pas supprimer un script en cours d'exécution depuis ce même dossier.
+Vous pouvez aussi double-cliquer sur `tools\Nettoyer-MidnightCompanion.cmd`. Il affiche d'abord les copies trouvées, puis demande une confirmation avant suppression. Le lanceur se copie temporairement hors du dossier addon et change son répertoire courant vers `%TEMP%` avant de le supprimer, car Windows ne peut pas supprimer un dossier utilisé comme répertoire courant.
 
 Fermez complètement WoW avant de lancer le nettoyage. Le script détecte les processus Retail et Classic (`Wow*`). Battle.net peut rester ouvert ; seul le jeu doit être fermé pour libérer les fichiers d'addons. Fermez aussi un terminal ou l'Explorateur positionné dans le dossier à supprimer.
 

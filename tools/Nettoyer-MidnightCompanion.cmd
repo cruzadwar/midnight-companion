@@ -3,6 +3,7 @@ setlocal
 title Nettoyage Midnight Companion
 
 if /I "%~1"=="--worker" (
+    cd /d "%TEMP%"
     powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0Cleanup-MidnightCompanion.ps1" -Apply
     echo.
     pause

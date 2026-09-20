@@ -20,7 +20,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tools\Cleanup-Midnight
 
 Si la liste est correcte, ajoutez `-Apply` pour supprimer uniquement les dossiers `MidnightCompanion` et `MidnightCompanion-*`. Le script ne supprime aucun autre addon et ne parcourt pas tout le disque.
 
-Pour une exécution par double-clic, utilisez `tools\Nettoyer-MidnightCompanion.cmd`. N'ouvrez pas directement le fichier `.ps1` dans l'éditeur Windows. Le lanceur se déporte automatiquement dans `%TEMP%` avant de supprimer le dossier addon, afin de ne pas verrouiller son propre fichier.
+Pour une exécution par double-clic, utilisez `tools\Nettoyer-MidnightCompanion.cmd`. N'ouvrez pas directement le fichier `.ps1` dans l'éditeur Windows. Le lanceur se déporte automatiquement dans `%TEMP%` et change son répertoire courant avant de supprimer le dossier addon.
 
 Fermez d'abord WoW : le script détecte tous les processus `Wow*` et refuse volontairement de supprimer un addon pendant que le jeu est ouvert. Battle.net peut rester ouvert. Fermez aussi tout terminal ou Explorateur positionné dans le dossier addon.
 
