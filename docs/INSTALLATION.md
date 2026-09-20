@@ -10,4 +10,14 @@ Pour diagnostiquer un problème :
 - ne conservez qu'un seul dossier `MidnightCompanion` dans `Interface\AddOns` après chaque mise à jour.
 - vérifiez que le journal de combat est disponible pour les compteurs.
 
+## Nettoyage des anciennes copies
+
+Depuis la racine du dépôt, lancez d'abord le mode aperçu :
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tools\Cleanup-MidnightCompanion.ps1
+```
+
+Si la liste est correcte, ajoutez `-Apply` pour supprimer uniquement les dossiers `MidnightCompanion` et `MidnightCompanion-*`. Le script ne supprime aucun autre addon et ne parcourt pas tout le disque.
+
 Les recommandations de classe et de spécialisation doivent être ajoutées uniquement avec une source vérifiable pour le patch ciblé. Une donnée inconnue doit rester vide afin d'éviter de pousser un joueur vers une action incorrecte.

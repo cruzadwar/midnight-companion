@@ -4,6 +4,15 @@ Midnight Companion est un addon WoW **d'aide à la décision**, lisible en jeu e
 
 Version actuelle : **0.5.2**
 
+Pour supprimer les anciennes copies Windows avant une nouvelle installation, utilisez le nettoyeur fourni :
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tools\Cleanup-MidnightCompanion.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tools\Cleanup-MidnightCompanion.ps1 -Apply
+```
+
+La première commande fait uniquement un aperçu. Le nettoyage cible exclusivement les dossiers `MidnightCompanion` et `MidnightCompanion-*` dans les répertoires `Interface\AddOns` des installations WoW détectées. Si le jeu est installé ailleurs, ajoutez `-WorldOfWarcraftPath "C:\Chemin\World of Warcraft"`.
+
 ## Installation
 
 1. Téléchargez ou clonez ce dépôt.
