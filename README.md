@@ -22,7 +22,7 @@ La première commande fait uniquement un aperçu. Le nettoyage cible exclusiveme
 1. Téléchargez ou clonez ce dépôt.
 2. Copiez le dossier contenant `MidnightCompanion.toc`, `Core.lua`, `Combat.lua`, `Data.lua` et `UI.lua` dans `World of Warcraft/_retail_/Interface/AddOns/MidnightCompanion`.
 3. Relancez le jeu ou utilisez « Recharger » à l'écran de sélection.
-4. En jeu, vérifiez le chargement avec `/mc diag`, puis utilisez `/mc show` hors combat pour ouvrir le panneau. `/mc help` liste les commandes.
+4. En jeu, le message « Midnight Companion est chargé » doit apparaître. Utilisez `/mc status`, puis `/mc show` hors combat pour ouvrir le panneau. `/mc help` liste les commandes.
 
 ## Fonctionnalités du MVP
 
@@ -32,7 +32,7 @@ La première commande fait uniquement un aperçu. Le nettoyage cible exclusiveme
 - Segments de combat et de rencontre, historique borné des cinq derniers combats et rapport post-combat.
 - Conseils et identité disponibles à la demande avec `/mc show`.
 - Architecture data-driven (`Data.lua`) pour ajouter des entrées vérifiées par classe/spécialisation.
-- Version 1.6.1 : `/mc show` affiche désormais toujours le panneau au premier appel, `/mc diag` confirme le chargement du TOC et un message de démarrage est visible dans le chat.
+- Version 1.6.1 : `/mc show` affiche toujours le panneau au premier appel, `/mc status` confirme le chargement du TOC et un message de démarrage est visible dans le chat. Sans rencontre vérifiée, le panneau affiche un coach générique utile plutôt qu'un contenu vide.
 
 ## Limites et sécurité
 

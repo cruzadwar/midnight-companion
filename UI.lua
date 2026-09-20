@@ -79,7 +79,16 @@ function ns:ShowPanel()
         .. " • " .. modeData.label, 11, { 0.45, 0.75, 0.95 }, -82)
 
     local y = -108
-    for index, recommendation in ipairs(data.recommendations) do
+    local recommendations = data.recommendations
+    if #recommendations == 0 then
+        recommendations = {
+            {
+                priority = "COACH",
+                text = "Aucune rencontre vérifiée : reste en vie, gère la mécanique visible, puis reprends ton activité.",
+            },
+        }
+    end
+    for index, recommendation in ipairs(recommendations) do
         if index > 1 then break end
         local color = recommendation.priority == "URGENT" and COLORS.danger
             or recommendation.priority == "DÉFENSE" and COLORS.gold

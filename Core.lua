@@ -178,13 +178,14 @@ SlashCmdList.MIDNIGHTCOMPANION = function(message)
         else
             ns:Print("Erreur : interface Midnight Companion absente.")
         end
-    elseif command == "diag" or command == "diagnostic" then
+    elseif command == "diag" or command == "diagnostic" or command == "status" then
         ns:PrintDiagnostic()
     elseif command == "toggle" then
         if ns.TogglePanel then ns:TogglePanel() end
     elseif command == "help" then
         ns:Print("/mc show - afficher les recommandations dans le chat")
-        ns:Print("/mc diag - vérifier le chargement et l'interface")
+        ns:Print("/mc status - confirmer le chargement et l'interface")
+        ns:Print("/mc diag - alias détaillé de /mc status")
         ns:Print("/mc toggle - afficher ou masquer le panneau")
         ns:Print("/midnightcompanion show - alias de /mc show")
         ns:Print("/mc reset - réinitialiser les compteurs de combat")
@@ -207,5 +208,5 @@ local startup = CreateFrame("Frame")
 startup:RegisterEvent("PLAYER_LOGIN")
 startup:SetScript("OnEvent", function()
     ns:RefreshIdentity()
-    ns:Print("Version 1.6.1 chargée. /mc diag vérifie l'installation ; /mc show ouvre le panneau hors combat.")
+    ns:Print("Midnight Companion est chargé. /mc show ouvre le panneau ; /mc status confirme l'état.")
 end)
