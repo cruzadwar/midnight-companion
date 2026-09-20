@@ -88,6 +88,7 @@ function ns:PrintDiagnostic()
     elseif IsAddOnLoaded then
         loaded = IsAddOnLoaded("MidnightCompanion")
     end
+
     local version = "inconnue"
     if C_AddOns and C_AddOns.GetAddOnMetadata then
         version = C_AddOns.GetAddOnMetadata("MidnightCompanion", "Version") or version
@@ -100,6 +101,48 @@ function ns:PrintDiagnostic()
         self.ShowPanel and "prête" or "absente",
         self.State.inCombat and "oui" or "non"))
     self:Print("DIAG | utilisez /mc show hors combat pour afficher le panneau.")
+end
+
+local function IsMageSpellKnown(spellID)
+    if C_Spell and C_Spell.IsSpellKnown then
+        return C_Spell.IsSpellKnown(spellID)
+    end
+    if IsSpellKnown then
+        return IsSpellKnown(spellID)
+    end
+    return false
+end
+
+function ns:GetMageDestinations()
+    self:RefreshIdentity()
+    if self.State.classToken ~= "MAGE" then
+        return nil, "Cette aide est réservée aux Mages."
+    end
+    local result = {}
+    for _, entry in ipairs(self.Data.MageDestinations or {}) do
+        result[#result + 1] = {
+            destination = entry.destination,
+            kind = entry.kind,
+            available = IsMageSpellKnown(entry.spellID),
+        }
+    end
+    return result
+end
+
+function ns:PrintMageHelp()
+    local destinations, fallback = self:GetMageDestinations()
+    if not destinations then
+        self:Print(fallback)
+        return
+    end
+    self:Print("Aide Mage | destinations vérifiées par l'API des sorts :")
+    for _, entry in ipairs(destinations) do
+        self:Print(string.format("%s %s : %s",
+            entry.available and "[DISPONIBLE]" or "[NON DISPONIBLE]",
+            entry.destination,
+            entry.kind == "portal" and "portail pour le groupe" or "téléportation personnelle"))
+    end
+    self:Print("Conseil : portail avant le départ, téléportation pour le retour personnel ; les destinations absentes doivent être vérifiées en jeu.")
 end
 
 function ns:PrintRecommendations()
@@ -180,12 +223,15 @@ SlashCmdList.MIDNIGHTCOMPANION = function(message)
         end
     elseif command == "diag" or command == "diagnostic" or command == "status" then
         ns:PrintDiagnostic()
+    elseif command == "mage" then
+        ns:PrintMageHelp()
     elseif command == "toggle" then
         if ns.TogglePanel then ns:TogglePanel() end
     elseif command == "help" then
         ns:Print("/mc show - afficher les recommandations dans le chat")
         ns:Print("/mc status - confirmer le chargement et l'interface")
         ns:Print("/mc diag - alias détaillé de /mc status")
+        ns:Print("/mc mage - aide téléportations et portails pour Mage")
         ns:Print("/mc toggle - afficher ou masquer le panneau")
         ns:Print("/midnightcompanion show - alias de /mc show")
         ns:Print("/mc reset - réinitialiser les compteurs de combat")

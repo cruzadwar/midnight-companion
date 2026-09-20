@@ -21,6 +21,11 @@ foreach ($command in @("PrintDiagnostic", "PLAYER_LOGIN", "/mc status", "ShowPan
     $combined = $core + (Get-Content (Join-Path $root "UI.lua") -Raw)
     if ($combined -notmatch [regex]::Escape($command)) { throw "Diagnostic ou affichage absent: $command" }
 }
+$data = Get-Content (Join-Path $root "Data.lua") -Raw
+foreach ($feature in @("MageDestinations", "GetMageDestinations", "/mc mage")) {
+    $combined = $core + $data + (Get-Content (Join-Path $root "UI.lua") -Raw)
+    if ($combined -notmatch [regex]::Escape($feature)) { throw "Aide Mage absente: $feature" }
+}
 
 $ui = Get-Content (Join-Path $root "UI.lua") -Raw
 if ($ui -match "SecureActionButton|BackdropTemplate|StartMoving|StopMovingOrSizing|SetMovable|RegisterForDrag|EnableMouse|SetAttribute") {

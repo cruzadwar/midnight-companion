@@ -102,6 +102,10 @@ function ns:ShowPanel()
         AddLine("CLASSE  •  " .. data.classHint, 11, COLORS.text, y)
         y = y - 42
     end
+    if data.combat.classToken == "MAGE" then
+        AddLine("MAGE  •  /mc mage pour vérifier les téléportations et portails", 11, COLORS.cyan, y)
+        y = y - 32
+    end
     y = y - 24
     if data.combat.inCombat then
         local duration = data.combat.combatStart and (GetTime() - data.combat.combatStart) or 0

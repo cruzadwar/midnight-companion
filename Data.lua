@@ -100,3 +100,12 @@ ns.Data.ClassHints = {
     WARLOCK = "Planifie ton déplacement et tes défenses avant les phases qui interrompent ton cycle.",
     WARRIOR = "Entretiens ton positionnement et tes défenses ; la régularité est plus importante qu'une prise de risque.",
 }
+
+-- IDs are checked at runtime. A changed or unknown spell is shown as
+-- unavailable instead of being presented as a usable destination.
+ns.Data.MageDestinations = {
+    { destination = "Stormwind", spellID = 3561, kind = "teleport" },
+    { destination = "Orgrimmar", spellID = 3567, kind = "teleport" },
+    { destination = "Portail : Stormwind", spellID = 10059, kind = "portal" },
+    { destination = "Portail : Orgrimmar", spellID = 11417, kind = "portal" },
+}

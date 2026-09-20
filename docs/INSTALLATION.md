@@ -10,6 +10,7 @@ Pour diagnostiquer un problème :
 - après connexion, le message `Midnight Companion est chargé` doit apparaître dans le chat ; utilisez `/mc status` pour confirmer que le TOC et l'interface sont actifs ;
 - `/mc show` affiche toujours le panneau hors combat ; `/mc toggle` le masque ou l'affiche ;
 - `/mc report` imprime le dernier rapport dans le chat ;
+- `/mc mage` affiche les téléportations et portails Mage dont l'API confirme la disponibilité ; une autre classe reçoit un message explicite ;
 - `/mc details` imprime les conseils détaillés uniquement à la demande ;
 - `/mc mode discovery|support|progression` ajuste la densité d'aide ;
 - ne conservez qu'un seul dossier `MidnightCompanion` dans `Interface\AddOns` après chaque mise à jour.

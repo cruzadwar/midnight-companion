@@ -2,7 +2,7 @@
 
 Midnight Companion est un addon WoW **d'aide à la décision**, lisible en jeu et sans automatisation. Il identifie la classe, la spécialisation et le rôle du personnage, affiche des priorités contextuelles DPS/tank/soins, signale des événements de survie et produit un bref rapport après combat.
 
-Version actuelle : **1.6.1**
+Version actuelle : **1.6.2**
 
 Pour supprimer les anciennes copies Windows avant une nouvelle installation, utilisez le nettoyeur fourni :
 
@@ -33,6 +33,7 @@ La première commande fait uniquement un aperçu. Le nettoyage cible exclusiveme
 - Conseils et identité disponibles à la demande avec `/mc show`.
 - Architecture data-driven (`Data.lua`) pour ajouter des entrées vérifiées par classe/spécialisation.
 - Version 1.6.1 : `/mc show` affiche toujours le panneau au premier appel, `/mc status` confirme le chargement du TOC et un message de démarrage est visible dans le chat. Sans rencontre vérifiée, le panneau affiche un coach générique utile plutôt qu'un contenu vide.
+- Version 1.6.2 : les Mages disposent de `/mc mage` et d'un rappel dans le panneau. Les téléportations et portails sont marqués disponibles uniquement lorsque l'API confirme le sort connu ; les autres restent explicitement indisponibles.
 
 ## Limites et sécurité
 
