@@ -36,19 +36,6 @@ function ui:Create()
     panel = CreateFrame("Frame", "MidnightCompanionPanel", UIParent, "BackdropTemplate")
     panel:SetSize(390, 520)
     panel:SetPoint("CENTER")
-    panel:SetMovable(true)
-    panel:EnableMouse(true)
-    panel:RegisterForDrag("LeftButton")
-    panel:SetScript("OnDragStart", function(frame)
-        if not InCombatLockdown() then
-            frame:StartMoving()
-        end
-    end)
-    panel:SetScript("OnDragStop", function(frame)
-        if not InCombatLockdown() then
-            frame:StopMovingOrSizing()
-        end
-    end)
     panel:SetBackdrop({
         bgFile = "Interface/Tooltips/UI-Tooltip-Background",
         edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
@@ -61,7 +48,7 @@ function ui:Create()
     title:SetText("Midnight Companion")
     title:SetPoint("TOPLEFT", 18, -16)
     local hint = FontString(panel, 11, { 0.65, 0.68, 0.74 })
-    hint:SetText("Glissez le panneau pour le déplacer • /mc pour le masquer")
+    hint:SetText("/mc pour afficher ou masquer • panneau fixe pour compatibilité Blizzard")
     hint:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -4)
 
     body = CreateFrame("Frame", nil, panel)
