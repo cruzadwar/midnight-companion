@@ -6,6 +6,12 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+$running = @(Get-Process -Name "Wow", "WowClassic" -ErrorAction SilentlyContinue)
+if ($running.Count -gt 0) {
+    $names = ($running | Select-Object -ExpandProperty ProcessName -Unique) -join ", "
+    Write-Error "Le nettoyage est bloque car WoW est encore ouvert : $names. Fermez le jeu, puis relancez le nettoyeur."
+}
+
 function Get-CandidateRoots {
     param([string[]]$ExplicitPath)
 

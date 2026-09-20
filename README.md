@@ -13,6 +13,8 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tools\Cleanup-Midnight
 
 Vous pouvez aussi double-cliquer sur `tools\Nettoyer-MidnightCompanion.cmd`. Il affiche d'abord les copies trouvées, puis demande une confirmation avant suppression.
 
+Fermez complètement WoW avant de lancer le nettoyage. Battle.net peut rester ouvert ; seul le jeu doit être fermé pour libérer les fichiers d'addons.
+
 La première commande fait uniquement un aperçu. Le nettoyage cible exclusivement les dossiers `MidnightCompanion` et `MidnightCompanion-*` dans les répertoires `Interface\AddOns` des installations WoW détectées. Si le jeu est installé ailleurs, ajoutez `-WorldOfWarcraftPath "C:\Chemin\World of Warcraft"`.
 
 ## Installation

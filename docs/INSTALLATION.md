@@ -22,4 +22,6 @@ Si la liste est correcte, ajoutez `-Apply` pour supprimer uniquement les dossier
 
 Pour une exécution par double-clic, utilisez `tools\Nettoyer-MidnightCompanion.cmd`. N'ouvrez pas directement le fichier `.ps1` dans l'éditeur Windows.
 
+Fermez d'abord WoW : le script refuse volontairement de supprimer un addon pendant que le jeu est ouvert. Battle.net peut rester ouvert.
+
 Les recommandations de classe et de spécialisation doivent être ajoutées uniquement avec une source vérifiable pour le patch ciblé. Une donnée inconnue doit rester vide afin d'éviter de pousser un joueur vers une action incorrecte.
