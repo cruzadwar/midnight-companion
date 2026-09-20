@@ -2,8 +2,6 @@ local addonName, ns = ...
 ns = ns or {}
 MidnightCompanion = ns
 
-local frame = CreateFrame("Frame")
-ns.Events = frame
 ns.State = {
     classToken = nil,
     className = nil,
@@ -48,14 +46,6 @@ function ns:GetIdentityLine()
     return string.format("%s - %s (%s)", state.className or UNKNOWN, spec, role)
 end
 
-function ns:ResetCombat()
-    self.State.damageTaken = 0
-    self.State.deaths = 0
-    self.State.interrupts = 0
-    self.State.dispels = 0
-    self.State.mechanics = 0
-end
-
 function ns:Print(message)
     DEFAULT_CHAT_FRAME:AddMessage("|cff70d6ffMidnight Companion|r: " .. message)
 end
@@ -72,26 +62,11 @@ end
 SLASH_MIDNIGHTCOMPANION1 = "/mc"
 SlashCmdList.MIDNIGHTCOMPANION = function(message)
     local command = string.lower(strtrim(message or ""))
-    if command == "reset" then
-        ns:ResetCombat()
-        ns:Print("Statistiques de combat réinitialisées.")
-    elseif command == "show" or command == "" then
+    if command == "show" or command == "" then
         ns:PrintRecommendations()
     elseif command == "help" then
-        ns:Print("/mc show - afficher ou masquer le panneau")
-        ns:Print("/mc reset - réinitialiser les statistiques du combat")
+        ns:Print("/mc show - afficher les recommandations dans le chat")
     else
         ns:Print("Commande inconnue. Utilisez /mc help.")
     end
 end
-
-frame:SetScript("OnEvent", function(_, event)
-    if event == "PLAYER_LOGIN" or event == "PLAYER_ENTERING_WORLD"
-        or event == "PLAYER_SPECIALIZATION_CHANGED" or event == "GROUP_ROSTER_UPDATE" then
-        ns:RefreshIdentity()
-    end
-end)
-frame:RegisterEvent("PLAYER_LOGIN")
-frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-frame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-frame:RegisterEvent("GROUP_ROSTER_UPDATE")
