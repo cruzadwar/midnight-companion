@@ -16,7 +16,6 @@ ns.State = {
     dispels = 0,
     mechanics = 0,
 }
-ns.Events = CreateFrame("Frame")
 
 local function SafeRole()
     local role = UnitGroupRolesAssigned("player")
@@ -84,14 +83,3 @@ SlashCmdList.MIDNIGHTCOMPANION = function(message)
         ns:Print("Commande inconnue. Utilisez /mc help.")
     end
 end
-
-ns.Events:SetScript("OnEvent", function(_, event)
-    if event == "PLAYER_LOGIN" or event == "PLAYER_ENTERING_WORLD"
-        or event == "PLAYER_SPECIALIZATION_CHANGED" or event == "GROUP_ROSTER_UPDATE" then
-        ns:RefreshIdentity()
-    end
-end)
-ns.Events:RegisterEvent("PLAYER_LOGIN")
-ns.Events:RegisterEvent("PLAYER_ENTERING_WORLD")
-ns.Events:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-ns.Events:RegisterEvent("GROUP_ROSTER_UPDATE")

@@ -2,10 +2,8 @@
 ## Title: Midnight Companion
 ## Notes: Contextual, non-automated combat coaching for World of Warcraft: Midnight
 ## Author: cruzadwar
-## Version: 0.6.0
-## SavedVariables: MidnightCompanionDB
+## Version: 0.7.0
 ## X-Category: Combat
 
 Data.lua
 Core.lua
-Combat.lua
