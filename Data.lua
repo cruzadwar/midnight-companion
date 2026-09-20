@@ -109,3 +109,9 @@ ns.Data.MageDestinations = {
     { destination = "Portail : Stormwind", spellID = 10059, kind = "portal" },
     { destination = "Portail : Orgrimmar", spellID = 11417, kind = "portal" },
 }
+
+ns.Data.TravelDestinations = {
+    { name = "Stormwind", location = "Royaumes de l'Est", note = "Capitale de l'Alliance." },
+    { name = "Orgrimmar", location = "Kalimdor", note = "Capitale de la Horde." },
+    { name = "Zone de départ ou hub courant", location = "Selon l'extension et le personnage", note = "Vérifier la carte et le maître de vol." },
+}

@@ -102,8 +102,13 @@ function ns:ShowPanel()
         AddLine("CLASSE  •  " .. data.classHint, 11, COLORS.text, y)
         y = y - 42
     end
+    AddLine("VOYAGE  •  /mc travel pour les destinations et options de retour", 11, COLORS.cyan, y)
+    y = y - 32
     if data.combat.classToken == "MAGE" then
-        AddLine("MAGE  •  /mc mage pour vérifier les téléportations et portails", 11, COLORS.cyan, y)
+        AddLine("MAGE  •  /mc mage vérifie tes téléportations et portails", 11, COLORS.cyan, y)
+        y = y - 32
+    else
+        AddLine("VOYAGE  •  demande un portail à un Mage quand c'est nécessaire", 11, COLORS.gold, y)
         y = y - 32
     end
     y = y - 24

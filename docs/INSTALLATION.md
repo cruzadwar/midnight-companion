@@ -11,6 +11,7 @@ Pour diagnostiquer un problème :
 - `/mc show` affiche toujours le panneau hors combat ; `/mc toggle` le masque ou l'affiche ;
 - `/mc report` imprime le dernier rapport dans le chat ;
 - `/mc mage` affiche les téléportations et portails Mage dont l'API confirme la disponibilité ; une autre classe reçoit un message explicite ;
+- `/mc travel` affiche le guide de voyage pour toutes les classes : destinations, portail de groupe, téléportation personnelle et alternatives sans invention ;
 - `/mc details` imprime les conseils détaillés uniquement à la demande ;
 - `/mc mode discovery|support|progression` ajuste la densité d'aide ;
 - ne conservez qu'un seul dossier `MidnightCompanion` dans `Interface\AddOns` après chaque mise à jour.

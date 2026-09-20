@@ -145,6 +145,23 @@ function ns:PrintMageHelp()
     self:Print("Conseil : portail avant le départ, téléportation pour le retour personnel ; les destinations absentes doivent être vérifiées en jeu.")
 end
 
+function ns:PrintTravelGuide()
+    self:RefreshIdentity()
+    self:Print("Guide voyage | destinations et options sûres :")
+    for _, entry in ipairs(self.Data.TravelDestinations or {}) do
+        self:Print(string.format("- %s (%s) : %s", entry.name, entry.location, entry.note))
+    end
+    if self.State.classToken == "MAGE" then
+        self:Print("Mage : /mc mage détaille les téléportations et portails dont les sorts sont connus.")
+        self:Print("Portail : le Mage le lance pour le groupe ; chaque joueur clique le portail pour voyager.")
+        self:Print("Téléportation : retour personnel du Mage, sans clic du groupe.")
+    else
+        self:Print("Non-Mage : demande un portail à un Mage ; ne te présente pas comme capable de te téléporter.")
+    end
+    self:Print("Alternatives : pierre de foyer si liée à la destination, maître de vol ou portail de zone selon ce que ta carte propose.")
+    self:Print("Aucun objet ou trajet supplémentaire n'est annoncé sans donnée vérifiable dans l'API.")
+end
+
 function ns:PrintRecommendations()
     self:RefreshIdentity()
     local roleData = self.Data.Roles[self.State.role] or self.Data.Roles.NONE
@@ -223,15 +240,19 @@ SlashCmdList.MIDNIGHTCOMPANION = function(message)
         end
     elseif command == "diag" or command == "diagnostic" or command == "status" then
         ns:PrintDiagnostic()
+    elseif command == "travel" then
+        ns:PrintTravelGuide()
     elseif command == "mage" then
-        ns:PrintMageHelp()
+        ns:PrintTravelGuide()
+        if ns.State.classToken == "MAGE" then ns:PrintMageHelp() end
     elseif command == "toggle" then
         if ns.TogglePanel then ns:TogglePanel() end
     elseif command == "help" then
         ns:Print("/mc show - afficher les recommandations dans le chat")
         ns:Print("/mc status - confirmer le chargement et l'interface")
         ns:Print("/mc diag - alias détaillé de /mc status")
-        ns:Print("/mc mage - aide téléportations et portails pour Mage")
+        ns:Print("/mc travel - guide de voyage pour toutes les classes")
+        ns:Print("/mc mage - alias voyage, avec détail des sorts pour Mage")
         ns:Print("/mc toggle - afficher ou masquer le panneau")
         ns:Print("/midnightcompanion show - alias de /mc show")
         ns:Print("/mc reset - réinitialiser les compteurs de combat")
