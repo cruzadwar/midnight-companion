@@ -7,7 +7,8 @@ Pour diagnostiquer un problème :
 - activez les erreurs Lua avec `/console scriptErrors 1` ;
 - rechargez avec `/reload` ;
 - testez `/mc help`, `/mc show`, puis `/mc reset` ;
-- la version 1.0.0 affiche les conseils dans le chat et dans un panneau passif après `/mc show`, hors combat ;
+- la version 1.1.0 affiche les conseils, l'état des segments et le dernier rapport dans un panneau passif après `/mc show`, hors combat ;
+- `/mc report` imprime le dernier rapport dans le chat ;
 - ne conservez qu'un seul dossier `MidnightCompanion` dans `Interface\AddOns` après chaque mise à jour.
 - vérifiez que le journal de combat est disponible pour les compteurs.
 

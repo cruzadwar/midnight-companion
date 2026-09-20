@@ -15,6 +15,10 @@ ns.State = {
     interrupts = 0,
     dispels = 0,
     mechanics = 0,
+    encounterName = nil,
+    challengeActive = false,
+    lastReport = nil,
+    history = {},
 }
 
 local function SafeRole()
@@ -55,6 +59,7 @@ function ns:ResetCombat()
     self.State.deaths = 0
     self.State.interrupts = 0
     self.State.dispels = 0
+    self.State.mechanics = 0
 end
 
 function ns:PrintRecommendations()
@@ -70,6 +75,9 @@ function ns:PrintRecommendations()
     if classHint then self:Print("Classe : " .. classHint) end
     self:Print("Équipement : " .. self.Data.Equipment[1])
     self:Print("Talents : " .. self.Data.Talents[3])
+    if self.State.lastReport then
+        self:Print(string.format("Dernier combat : %s", self.State.lastReport.summary))
+    end
 end
 
 function ns:GetRecommendationData()
@@ -81,6 +89,7 @@ function ns:GetRecommendationData()
         classHint = self.Data.ClassHints[self.State.classToken],
         equipment = self.Data.Equipment,
         talents = self.Data.Talents,
+        combat = self.State,
     }
 end
 
@@ -96,6 +105,8 @@ SlashCmdList.MIDNIGHTCOMPANION = function(message)
     elseif command == "reset" then
         ns:ResetCombat()
         ns:Print("Compteurs de combat réinitialisés.")
+    elseif command == "report" then
+        if ns.PrintReport then ns:PrintReport() else ns:Print("Aucun rapport disponible.") end
     else
         ns:Print("Commande inconnue. Utilisez /mc help.")
     end

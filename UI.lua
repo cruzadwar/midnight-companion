@@ -69,5 +69,22 @@ function ns:TogglePanel()
     AddLine("• " .. data.talents[1], 11, { 0.75, 0.82, 0.9 }, y)
     y = y - 32
     AddLine("Données patch : " .. data.talents[3], 10, { 0.62, 0.68, 0.76 }, y)
+    y = y - 36
+    AddLine("ÉTAT DU COMBAT", 11, { 0.45, 0.75, 0.95 }, y)
+    y = y - 28
+    if data.combat.inCombat then
+        local duration = data.combat.combatStart and (GetTime() - data.combat.combatStart) or 0
+        AddLine(string.format("• En combat depuis %.0fs", duration), 11, { 1, 0.45, 0.35 }, y)
+    else
+        AddLine("• Hors combat : prêt pour la prochaine rencontre", 11, { 0.55, 0.85, 0.6 }, y)
+    end
+    y = y - 30
+    if data.combat.lastReport then
+        AddLine("• Dernier rapport : " .. data.combat.lastReport.summary, 11, { 0.8, 0.86, 0.92 }, y)
+    else
+        AddLine("• Aucun rapport post-combat disponible", 11, { 0.62, 0.68, 0.76 }, y)
+    end
+    y = y - 30
+    AddLine("Historique conservé : " .. #data.combat.history .. "/5", 10, { 0.62, 0.68, 0.76 }, y)
     panel:Show()
 end

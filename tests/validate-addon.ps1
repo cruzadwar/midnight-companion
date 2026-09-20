@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
-$required = @("MidnightCompanion.toc", "Data.lua", "Core.lua", "UI.lua")
+$required = @("MidnightCompanion.toc", "Data.lua", "Core.lua", "Combat.lua", "UI.lua")
 
 foreach ($file in $required) {
     $path = Join-Path $root $file
@@ -21,6 +21,11 @@ foreach ($api in @("UnitClass", "GetSpecializationInfo", "UnitGroupRolesAssigned
 $ui = Get-Content (Join-Path $root "UI.lua") -Raw
 if ($ui -match "SecureActionButton|BackdropTemplate|StartMoving|StopMovingOrSizing|SetMovable|RegisterForDrag|EnableMouse|SetAttribute") {
     throw "API d'interface protégée détectée"
+}
+
+$combat = Get-Content (Join-Path $root "Combat.lua") -Raw
+foreach ($event in @("PLAYER_REGEN_DISABLED", "PLAYER_REGEN_ENABLED", "ENCOUNTER_START", "ENCOUNTER_END")) {
+    if ($combat -notmatch [regex]::Escape($event)) { throw "Événement de cycle absent: $event" }
 }
 $ui = Get-Content (Join-Path $root "UI.lua") -Raw
 if ($ui -match "BackdropTemplate|SecureActionButton|StartMoving|StopMovingOrSizing|SetMovable|RegisterForDrag|EnableMouse|SetAttribute") {
