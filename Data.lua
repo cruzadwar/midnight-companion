@@ -55,3 +55,21 @@ ns.Data.Talents = {
     "Prefer verified encounter guides or in-game tooltips for patch-specific talent choices.",
     "No talent is recommended until a verified Midnight data entry is added.",
 }
+
+-- These are deliberately non-rotational prompts. They remain useful without
+-- pretending to know a patch-specific build, encounter, or spell priority.
+ns.Data.ClassHints = {
+    DEATHKNIGHT = "Anticipe les dégâts entrants et garde une ressource défensive pour les moments dangereux.",
+    DEMONHUNTER = "Priorise le placement et la mobilité : une mécanique évitée vaut mieux qu'une reprise d'uptime.",
+    DRUID = "Adapte ta forme et ton utilitaire au besoin du groupe avant de chercher la performance brute.",
+    EVOKER = "Planifie tes déplacements et tes temps de recharge autour des fenêtres de portée du groupe.",
+    HUNTER = "Préserve ta mobilité et ton utilitaire ; ne sacrifie pas une mécanique pour quelques secondes d'uptime.",
+    MAGE = "Prépare tes outils de mobilité et de défense avant les phases où le déplacement est obligatoire.",
+    MONK = "Coordonne mobilité, utilitaire et défenses avec le rythme des dégâts plutôt qu'en réaction tardive.",
+    PALADIN = "Garde un outil de soutien disponible pour le groupe et annonce les défenses importantes.",
+    PRIEST = "Surveille les cibles prioritaires et garde un outil d'urgence pour les dégâts imprévus.",
+    ROGUE = "Utilise ta mobilité et tes défenses pour gérer les mécaniques sans perdre le contrôle du rythme.",
+    SHAMAN = "Conserve ton utilitaire pour les moments où il change réellement l'issue d'une mécanique.",
+    WARLOCK = "Planifie ton déplacement et tes défenses avant les phases qui interrompent ton cycle.",
+    WARRIOR = "Entretiens ton positionnement et tes défenses ; la régularité est plus importante qu'une prise de risque.",
+}

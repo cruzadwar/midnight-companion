@@ -60,14 +60,28 @@ end
 function ns:PrintRecommendations()
     self:RefreshIdentity()
     local roleData = self.Data.Roles[self.State.role] or self.Data.Roles.NONE
+    local classHint = self.Data.ClassHints[self.State.classToken]
     self:Print(self:GetIdentityLine())
     for _, priority in ipairs(roleData.priorities) do
         self:Print("Priorité : " .. priority)
     end
 
     self:Print("Survie : " .. roleData.survival)
+    if classHint then self:Print("Classe : " .. classHint) end
     self:Print("Équipement : " .. self.Data.Equipment[1])
     self:Print("Talents : " .. self.Data.Talents[3])
+end
+
+function ns:GetRecommendationData()
+    self:RefreshIdentity()
+    return {
+        identity = self:GetIdentityLine(),
+        role = self.State.role,
+        roleData = self.Data.Roles[self.State.role] or self.Data.Roles.NONE,
+        classHint = self.Data.ClassHints[self.State.classToken],
+        equipment = self.Data.Equipment,
+        talents = self.Data.Talents,
+    }
 end
 
 SLASH_MIDNIGHTCOMPANION1 = "/mc"
