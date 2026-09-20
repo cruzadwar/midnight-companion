@@ -38,9 +38,6 @@ function ns:RefreshIdentity()
     self.State.specID = specID
     self.State.specName = specName
     self.State.role = SafeRole()
-    if self.UI and self.UI.Refresh and not InCombatLockdown() then
-        self.UI:Refresh()
-    end
 end
 
 function ns:GetIdentityLine()
