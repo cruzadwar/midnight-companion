@@ -72,6 +72,15 @@ function ns:SetMode(mode)
     self:Print("Mode d'aide : " .. self.Data.Modes[mode].label)
 end
 
+function ns:PrintQuickTip()
+    self:RefreshIdentity()
+    local recommendations = self:GetContextualRecommendations()
+    local first = recommendations[1]
+    self:Print(self:GetIdentityLine())
+    self:Print((first and ("À faire maintenant : " .. first.text))
+        or "À faire maintenant : reste en vie et observe la prochaine mécanique.")
+end
+
 function ns:PrintRecommendations()
     self:RefreshIdentity()
     local roleData = self.Data.Roles[self.State.role] or self.Data.Roles.NONE
@@ -79,15 +88,6 @@ function ns:PrintRecommendations()
     self:Print(self:GetIdentityLine())
     for _, priority in ipairs(roleData.priorities) do
         self:Print("Priorité : " .. priority)
-    end
-
-    function ns:PrintQuickTip()
-        self:RefreshIdentity()
-        local recommendations = self:GetContextualRecommendations()
-        local first = recommendations[1]
-        self:Print(self:GetIdentityLine())
-        self:Print((first and ("À faire maintenant : " .. first.text))
-            or "À faire maintenant : reste en vie et observe la prochaine mécanique.")
     end
 
     self:Print("Survie : " .. roleData.survival)
