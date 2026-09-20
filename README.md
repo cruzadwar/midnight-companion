@@ -2,7 +2,7 @@
 
 Midnight Companion est un addon WoW **d'aide à la décision**, lisible en jeu et sans automatisation. Il identifie la classe, la spécialisation et le rôle du personnage, affiche des priorités contextuelles DPS/tank/soins, signale des événements de survie et produit un bref rapport après combat.
 
-Version actuelle : **0.3.0**
+Version actuelle : **0.4.0**
 
 ## Installation
 
@@ -19,13 +19,13 @@ Version actuelle : **0.3.0**
 - Compteurs de dégâts subis, morts, interruptions et dispels tirés du journal de combat.
 - Conseils et identité disponibles à la demande avec `/mc show`.
 - Architecture data-driven (`Data.lua`) pour ajouter des entrées vérifiées par classe/spécialisation.
-- Mode totalement passif : aucune frame, aucun événement et aucune mutation d'interface n'est créée, afin d'éviter toute contamination d'interface.
+- Une frame interne d'événements non protégée collecte les changements de groupe/spécialisation et les événements de combat ; aucune frame visuelle ou action protégée n'est utilisée.
 
 ## Limites et sécurité
 
 L'addon ne lance aucun sort, ne cible aucune unité, ne clique pas à la place du joueur et ne prend pas de décision automatisée. Il n'intègre pas encore de base de données de rencontres, de simulation d'équipement ou de recommandations de talents spécifiques au patch. Ces données doivent être ajoutées après vérification dans le jeu et peuvent changer avec chaque correctif.
 
-Le champ `## Interface` du fichier TOC doit être ajusté si Blizzard change le numéro d'interface de Midnight. Les métriques du journal de combat sont volontairement limitées aux événements que l'API expose de manière stable. La version 0.3.0 privilégie le chat et le mode passif. Les alertes temps réel et le rapport post-combat sont désactivés dans cette édition de compatibilité ; ils seront réintroduits uniquement après validation sur le client cible.
+Le champ `## Interface` du fichier TOC doit être ajusté si Blizzard change le numéro d'interface de Midnight. Les métriques du journal de combat sont volontairement limitées aux événements que l'API expose de manière stable. La version 0.4.0 privilégie le chat et les événements publics de l'API. Les alertes sont textuelles et non automatisées ; aucune action de sort, ciblage ou clic n'est exécutée.
 
 ## Ajouter des données vérifiées
 

@@ -6,7 +6,7 @@ Pour diagnostiquer un problème :
 
 - activez les erreurs Lua avec `/console scriptErrors 1` ;
 - rechargez avec `/reload` ;
-- testez `/mc help` puis `/mc show` ;
+- testez `/mc help`, `/mc show`, puis `/mc reset` ;
 - vérifiez que le journal de combat est disponible pour les compteurs.
 
 Les recommandations de classe et de spécialisation doivent être ajoutées uniquement avec une source vérifiable pour le patch ciblé. Une donnée inconnue doit rester vide afin d'éviter de pousser un joueur vers une action incorrecte.

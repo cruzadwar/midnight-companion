@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
-$required = @("MidnightCompanion.toc", "Data.lua", "Core.lua")
+$required = @("MidnightCompanion.toc", "Data.lua", "Core.lua", "Combat.lua")
 
 foreach ($file in $required) {
     $path = Join-Path $root $file
@@ -16,6 +16,11 @@ foreach ($file in $required[1..4]) {
 $core = Get-Content (Join-Path $root "Core.lua") -Raw
 foreach ($api in @("UnitClass", "GetSpecializationInfo", "UnitGroupRolesAssigned")) {
     if ($core -notmatch [regex]::Escape($api)) { throw "API de détection absente: $api" }
+}
+
+if ($core -notmatch "CreateFrame") { throw "Frame d'événements absente" }
+if ($core -match "BackdropTemplate|StartMoving|StopMovingOrSizing|SetMovable|RegisterForDrag|EnableMouse") {
+    throw "API d'interface protégée détectée"
 }
 
 $allLua = Get-ChildItem $root -Filter *.lua

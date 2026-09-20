@@ -16,6 +16,7 @@ ns.State = {
     dispels = 0,
     mechanics = 0,
 }
+ns.Events = CreateFrame("Frame")
 
 local function SafeRole()
     local role = UnitGroupRolesAssigned("player")
@@ -50,12 +51,20 @@ function ns:Print(message)
     DEFAULT_CHAT_FRAME:AddMessage("|cff70d6ffMidnight Companion|r: " .. message)
 end
 
+function ns:ResetCombat()
+    self.State.damageTaken = 0
+    self.State.deaths = 0
+    self.State.interrupts = 0
+    self.State.dispels = 0
+end
+
 function ns:PrintRecommendations()
     local roleData = self.Data.Roles[self.State.role] or self.Data.Roles.NONE
     self:Print(self:GetIdentityLine())
     for _, priority in ipairs(roleData.priorities) do
         self:Print("Priorité : " .. priority)
     end
+
     self:Print("Survie : " .. roleData.survival)
 end
 
@@ -63,10 +72,26 @@ SLASH_MIDNIGHTCOMPANION1 = "/mc"
 SlashCmdList.MIDNIGHTCOMPANION = function(message)
     local command = string.lower(strtrim(message or ""))
     if command == "show" or command == "" then
+        ns:RefreshIdentity()
         ns:PrintRecommendations()
     elseif command == "help" then
         ns:Print("/mc show - afficher les recommandations dans le chat")
+        ns:Print("/mc reset - réinitialiser les compteurs de combat")
+    elseif command == "reset" then
+        ns:ResetCombat()
+        ns:Print("Compteurs de combat réinitialisés.")
     else
         ns:Print("Commande inconnue. Utilisez /mc help.")
     end
 end
+
+ns.Events:SetScript("OnEvent", function(_, event)
+    if event == "PLAYER_LOGIN" or event == "PLAYER_ENTERING_WORLD"
+        or event == "PLAYER_SPECIALIZATION_CHANGED" or event == "GROUP_ROSTER_UPDATE" then
+        ns:RefreshIdentity()
+    end
+end)
+ns.Events:RegisterEvent("PLAYER_LOGIN")
+ns.Events:RegisterEvent("PLAYER_ENTERING_WORLD")
+ns.Events:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
+ns.Events:RegisterEvent("GROUP_ROSTER_UPDATE")
