@@ -7,7 +7,7 @@ Pour diagnostiquer un problème :
 - activez les erreurs Lua avec `/console scriptErrors 1` ;
 - rechargez avec `/reload` ;
 - testez `/mc help`, `/mc show`, puis `/mc reset` ;
-- la version 0.7.0 affiche les conseils dans le chat et ne charge aucune frame ni événement ;
+- la version 0.8.0 affiche les conseils dans le chat et ne charge aucune frame ni événement ;
 - ne conservez qu'un seul dossier `MidnightCompanion` dans `Interface\AddOns` après chaque mise à jour.
 - vérifiez que le journal de combat est disponible pour les compteurs.
 

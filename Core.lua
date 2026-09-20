@@ -58,6 +58,7 @@ function ns:ResetCombat()
 end
 
 function ns:PrintRecommendations()
+    self:RefreshIdentity()
     local roleData = self.Data.Roles[self.State.role] or self.Data.Roles.NONE
     self:Print(self:GetIdentityLine())
     for _, priority in ipairs(roleData.priorities) do
@@ -65,13 +66,14 @@ function ns:PrintRecommendations()
     end
 
     self:Print("Survie : " .. roleData.survival)
+    self:Print("Équipement : " .. self.Data.Equipment[1])
+    self:Print("Talents : " .. self.Data.Talents[3])
 end
 
 SLASH_MIDNIGHTCOMPANION1 = "/mc"
 SlashCmdList.MIDNIGHTCOMPANION = function(message)
     local command = string.lower(strtrim(message or ""))
     if command == "show" or command == "" then
-        ns:RefreshIdentity()
         ns:PrintRecommendations()
     elseif command == "help" then
         ns:Print("/mc show - afficher les recommandations dans le chat")
