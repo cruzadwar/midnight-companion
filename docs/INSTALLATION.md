@@ -1,6 +1,25 @@
 # Installation et maintenance
 
-Le dossier de l'addon doit porter le nom `MidnightCompanion` et contenir le fichier `MidnightCompanion.toc` à sa racine. Ne placez pas un second dossier imbriqué entre `AddOns` et le fichier TOC.
+Le dossier de l'addon doit porter exactement le nom `MidnightCompanion` et contenir le fichier `MidnightCompanion.toc` à sa racine. Le ZIP 1.7.1 contient déjà cette structure :
+
+```text
+World of Warcraft\_retail_\Interface\AddOns\MidnightCompanion\
+  MidnightCompanion.toc
+  Core.lua
+  Data.lua
+  Combat.lua
+  UI.lua
+```
+
+Le chemin du TOC doit être exactement `World of Warcraft\_retail_\Interface\AddOns\MidnightCompanion\MidnightCompanion.toc`. Il ne doit pas être placé dans un sous-dossier supplémentaire.
+
+## Installation Retail
+
+1. Téléchargez le ZIP de release et ouvrez-le.
+2. Copiez le dossier unique `MidnightCompanion` dans `World of Warcraft\_retail_\Interface\AddOns\`.
+3. Vérifiez que `MidnightCompanion.toc` est directement dans ce dossier, pas dans un sous-dossier.
+4. Fermez et relancez WoW Retail, puis activez « Midnight Companion » dans la liste AddOns de l'écran de sélection.
+5. En jeu, le message « Midnight Companion est chargé » doit apparaître. Utilisez `/mc status`, puis `/mc show` hors combat.
 
 Pour diagnostiquer un problème :
 
