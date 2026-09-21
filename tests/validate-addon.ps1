@@ -14,6 +14,7 @@ foreach ($file in $required[1..4]) {
 }
 
 $core = Get-Content (Join-Path $root "Core.lua") -Raw
+$data = Get-Content (Join-Path $root "Data.lua") -Raw
 foreach ($api in @("UnitClass", "GetSpecializationInfo", "UnitGroupRolesAssigned")) {
     if ($core -notmatch [regex]::Escape($api)) { throw "API de détection absente: $api" }
 }
@@ -23,7 +24,6 @@ foreach ($command in @("PrintDiagnostic", "PLAYER_LOGIN", "/mc status", "ShowPan
 }
 $allProductText = $core + $data + (Get-Content (Join-Path $root "UI.lua") -Raw)
 if ($allProductText -notmatch [regex]::Escape('generic =')) { throw "Fallback générique absent" }
-$data = Get-Content (Join-Path $root "Data.lua") -Raw
 foreach ($feature in @("MageDestinations", "GetMageDestinations", "TravelDestinations", "PrintTravelGuide", "/mc travel", "demande un portail à un Mage")) {
     $combined = $core + $data + (Get-Content (Join-Path $root "UI.lua") -Raw)
     if ($combined -notmatch [regex]::Escape($feature)) { throw "Aide Mage absente: $feature" }
