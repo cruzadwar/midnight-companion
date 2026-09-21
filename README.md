@@ -2,7 +2,7 @@
 
 Midnight Companion est un addon WoW **d'aide à la décision**, lisible en jeu et sans automatisation. Il identifie la classe, la spécialisation et le rôle du personnage, affiche des priorités contextuelles DPS/tank/soins, signale des événements de survie et produit un bref rapport après combat.
 
-Version actuelle : **1.7.1**
+Version actuelle : **1.8.0**
 
 Pour supprimer les anciennes copies Windows avant une nouvelle installation, utilisez le nettoyeur fourni :
 
@@ -37,6 +37,7 @@ La première commande fait uniquement un aperçu. Le nettoyage cible exclusiveme
 - Version 1.6.3 : `/mc travel` devient un guide de voyage pour toutes les classes. Il explique les destinations, le fonctionnement d'un portail de Mage, le clic du groupe et les alternatives prudentes (pierre de foyer, maître de vol, portail de zone). `/mc mage` reste un alias et conserve les états disponibles/non disponibles pour les Mages.
 - Version 1.7.0 : `/mc show` ouvre un tableau de bord visuel avec identité, onboarding par rôle, prochain objectif, trois actions prioritaires et onglets Aperçu/Équipement/Talents/Voyage. Les indicateurs non disponibles par API restent explicitement non vérifiables ; aucun score précis n'est inventé.
 - Version 1.7.1 : package d'installation corrigé. Le ZIP contient un unique dossier `MidnightCompanion` avec `MidnightCompanion.toc` à sa racine, structure requise pour apparaître dans la liste des addons Retail.
+- Version 1.8.0 : interface compacte et coach solo/groupe contextualisé. L'interface et les conseils prennent en charge `frFR`, `frBE` et `frCA`; les autres locales utilisent l'anglais. Le panneau affiche avant/pendant/après, trois actions simples et un état honnête des données.
 
 ## Limites et sécurité
 

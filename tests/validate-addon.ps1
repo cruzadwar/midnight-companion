@@ -17,10 +17,12 @@ $core = Get-Content (Join-Path $root "Core.lua") -Raw
 foreach ($api in @("UnitClass", "GetSpecializationInfo", "UnitGroupRolesAssigned")) {
     if ($core -notmatch [regex]::Escape($api)) { throw "API de détection absente: $api" }
 }
-foreach ($command in @("PrintDiagnostic", "PLAYER_LOGIN", "/mc status", "ShowPanel", "Aucune rencontre vérifiée")) {
+foreach ($command in @("PrintDiagnostic", "PLAYER_LOGIN", "/mc status", "ShowPanel")) {
     $combined = $core + (Get-Content (Join-Path $root "UI.lua") -Raw)
     if ($combined -notmatch [regex]::Escape($command)) { throw "Diagnostic ou affichage absent: $command" }
 }
+$allProductText = $core + $data + (Get-Content (Join-Path $root "UI.lua") -Raw)
+if ($allProductText -notmatch [regex]::Escape("Aucune rencontre vérifiée")) { throw "Fallback générique absent" }
 $data = Get-Content (Join-Path $root "Data.lua") -Raw
 foreach ($feature in @("MageDestinations", "GetMageDestinations", "TravelDestinations", "PrintTravelGuide", "/mc travel", "demande un portail à un Mage")) {
     $combined = $core + $data + (Get-Content (Join-Path $root "UI.lua") -Raw)
@@ -30,6 +32,12 @@ $dashboard = $core + (Get-Content (Join-Path $root "UI.lua") -Raw)
 foreach ($feature in @("GetDashboardData", "ONBOARDING", "PROCHAIN OBJECTIF", "ACTIONS PRIORITAIRES", "non vérifiable", 'CreateFrame("Button"', "panel:Hide()")) {
     if ($dashboard -notmatch [regex]::Escape($feature)) { throw "Tableau de bord incomplet: $feature" }
 }
+$locale = Get-Content (Join-Path $root "Data.lua") -Raw
+foreach ($feature in @("frFR", "frBE", "frCA", "ns:T", "RoleText")) {
+    if ($locale -notmatch [regex]::Escape($feature)) { throw "Localisation absente: $feature" }
+}
+$ui = Get-Content (Join-Path $root "UI.lua") -Raw
+if ($ui -notmatch "SetSize\(400, 330\)") { throw "Panneau compact absent" }
 
 $ui = Get-Content (Join-Path $root "UI.lua") -Raw
 if ($ui -match "SecureActionButton|BackdropTemplate|StartMoving|StopMovingOrSizing|SetMovable|RegisterForDrag|EnableMouse|SetAttribute") {

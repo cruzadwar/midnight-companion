@@ -13,6 +13,8 @@ World of Warcraft\_retail_\Interface\AddOns\MidnightCompanion\
 
 Le chemin du TOC doit être exactement `World of Warcraft\_retail_\Interface\AddOns\MidnightCompanion\MidnightCompanion.toc`. Il ne doit pas être placé dans un sous-dossier supplémentaire.
 
+La langue est détectée automatiquement : interface française pour `frFR`, `frBE` et `frCA`, anglais de secours pour les autres locales. Les fichiers Lua et TOC sont enregistrés en UTF-8 ; les accents affichés sont intentionnels.
+
 ## Installation Retail
 
 1. Téléchargez le ZIP de release et ouvrez-le.

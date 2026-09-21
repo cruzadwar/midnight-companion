@@ -42,6 +42,12 @@ function ns:RefreshIdentity()
     self.State.specID = specID
     self.State.specName = specName
     self.State.role = SafeRole()
+    if self.State.role == "NONE" and self.State.specName then
+        local spec = string.lower(self.State.specName)
+        if string.find(spec, "vindicte", 1, true) or string.find(spec, "retribution", 1, true) then
+            self.State.role = "DAMAGER"
+        end
+    end
 end
 
 function ns:GetIdentityLine()
@@ -95,7 +101,9 @@ function ns:PrintDiagnostic()
     elseif GetAddOnMetadata then
         version = GetAddOnMetadata("MidnightCompanion", "Version") or version
     end
-    self:Print(string.format("DIAG | chargé=%s | version=%s | UI=%s | combat=%s",
+    local label = ns.Locale == "fr" and "DIAG | chargé=%s | version=%s | UI=%s | combat=%s"
+        or "DIAG | loaded=%s | version=%s | UI=%s | combat=%s"
+    self:Print(string.format(label,
         loaded and "oui" or "non",
         version,
         self.ShowPanel and "prête" or "absente",
@@ -165,9 +173,10 @@ end
 function ns:PrintRecommendations()
     self:RefreshIdentity()
     local roleData = self.Data.Roles[self.State.role] or self.Data.Roles.NONE
+    local localized = (self.Data.RoleText[ns.Locale] or self.Data.RoleText.en)[self.State.role] or self.Data.RoleText.en.NONE
     local classHint = self.Data.ClassHints[self.State.classToken]
     self:Print(self:GetIdentityLine())
-    for _, priority in ipairs(roleData.priorities) do
+    for _, priority in ipairs(localized) do
         self:Print("Priorité : " .. priority)
     end
 
@@ -198,8 +207,14 @@ end
 function ns:GetDashboardData()
     self:RefreshIdentity()
     local role = self.State.role
-    local roleLabel = role == "TANK" and "Tank" or role == "HEALER" and "Soins" or role == "DAMAGER" and "DPS" or "Rôle à confirmer"
+    local inGroup = IsInGroup and IsInGroup() or false
+    local level = UnitLevel and UnitLevel("player") or nil
+    local instanceName = GetInstanceInfo and GetInstanceInfo() or nil
+    local context = inGroup and "Groupe détecté" or "Solo"
+    if instanceName and instanceName ~= "" then context = context .. " • " .. instanceName end
+    local roleLabel = role == "TANK" and "Tank" or role == "HEALER" and "Soins" or role == "DAMAGER" and "DPS" or "Rôle à choisir"
     local roleData = self.Data.Roles[role] or self.Data.Roles.NONE
+    local localized = (self.Data.RoleText[ns.Locale] or self.Data.RoleText.en)[role] or self.Data.RoleText.en.NONE
     local averageItemLevel = nil
     if GetAverageItemLevel then
         local equipped = GetAverageItemLevel()
@@ -211,20 +226,23 @@ function ns:GetDashboardData()
     local onboarding = role == "TANK" and "Avant de partir : prépare une mitigation pour le premier gros impact."
         or role == "HEALER" and "Avant de partir : repère ta cible prioritaire et garde un soin d'urgence."
         or role == "DAMAGER" and "Avant de partir : choisis une mécanique à respecter avant ton optimisation."
-        or "Avant de partir : confirme ton rôle de groupe et lis la mécanique principale."
+        or "Avant de partir : choisis DPS, Tank ou Soins dans l'outil de groupe."
+    local roleChoice = role == "NONE"
+        and "Rôle non assigné : choisis DPS, Tank ou Soins dans l'outil de groupe."
+        or context .. " • rôle " .. roleLabel
     return {
         identity = self:GetIdentityLine(),
         className = self.State.className or UNKNOWN,
         specName = self.State.specName or "Spécialisation inconnue",
         roleLabel = roleLabel,
+        context = roleChoice .. " • " .. (level and ("Niveau " .. level) or "niveau non disponible"),
         roleData = roleData,
-        goal = roleData.priorities[1] or "Reste en vie et gère la mécanique principale.",
+        goal = localized[1],
         actions = {
-            roleData.priorities[1] or "Confirme ton rôle et ta priorité.",
-            roleData.priorities[2] or "Prépare une réponse défensive ou utilitaire.",
-            "Vérifie la mécanique principale avant de chercher l'optimisation.",
+            localized[1], localized[2], localized[3],
         },
         onboarding = onboarding,
+        localizedSurvival = localized[4],
         checks = {
             { label = "Équipement", value = equipmentStatus, why = "Le niveau moyen est un repère, pas un score de performance." },
             { label = "Talents", value = "À vérifier dans l'onglet Talents", why = "Aucune recommandation de patch n'est inventée." },

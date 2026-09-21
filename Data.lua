@@ -37,6 +37,21 @@ ns.Data.Roles = {
     },
 }
 
+ns.Data.RoleText = {
+    fr = {
+        DAMAGER = {"Gère la mécanique avant de reprendre ta rotation.", "Utilise une défense avant les dégâts évitables.", "Garde ton interruption ou utilitaire prêt.", "Reste en vie et reprends ton cycle depuis une position sûre."},
+        TANK = {"Garde une mitigation pour le prochain gros impact.", "Prépare une défense autour de la mécanique dangereuse.", "Oriente les ennemis loin du groupe.", "Surveille ta vie, ta mitigation et la portée des soins."},
+        HEALER = {"Stabilise les alliés avant de chercher à faire des dégâts.", "Prépare un soin d'urgence pour la prochaine mécanique.", "Garde ta portée et évite le déplacement inutile.", "Surveille les cibles en danger, ta mana et ton placement."},
+        NONE = {"Choisis DPS, Tank ou Soins dans l'outil de groupe.", "Lis la mécanique principale avant de partir.", "Demande de l'aide si le rôle reste incertain.", "Le coaching devient plus précis après le choix du rôle."},
+    },
+    en = {
+        DAMAGER = {"Handle the mechanic before resuming your rotation.", "Use a defensive before avoidable damage.", "Keep your interrupt or utility ready.", "Stay alive and resume your cycle from a safe position."},
+        TANK = {"Keep mitigation for the next heavy hit.", "Plan a defensive around the dangerous mechanic.", "Face enemies away from the group.", "Watch health, mitigation and healer range."},
+        HEALER = {"Stabilize allies before looking for damage.", "Keep an emergency heal for the next mechanic.", "Stay in range and avoid needless movement.", "Watch endangered players, mana and positioning."},
+        NONE = {"Choose DPS, Tank or Healer in the group tool.", "Read the main mechanic before leaving.", "Ask for help if the role is still unclear.", "Coaching becomes more precise after choosing a role."},
+    },
+}
+
 ns.Data.Classes = {
     DEATHKNIGHT = true, DEMONHUNTER = true, DRUID = true, EVOKER = true,
     HUNTER = true, MAGE = true, MONK = true, PALADIN = true,
@@ -115,3 +130,31 @@ ns.Data.TravelDestinations = {
     { name = "Orgrimmar", location = "Kalimdor", note = "Capitale de la Horde." },
     { name = "Zone de départ ou hub courant", location = "Selon l'extension et le personnage", note = "Vérifier la carte et le maître de vol." },
 }
+
+ns.Locale = (GetLocale and GetLocale() or "enUS")
+ns.Locale = (ns.Locale == "frFR" or ns.Locale == "frBE" or ns.Locale == "frCA") and "fr" or "en"
+ns.Data.Text = {
+    fr = {
+        dashboard = "TABLEAU DE BORD", overview = "APERÇU", equipment = "ÉQUIPEMENT", talents = "TALENTS", travel = "VOYAGE",
+        onboarding = "AVANT DE PARTIR", during = "PENDANT LE COMBAT", after = "APRÈS L'ESSAI",
+        goal = "PROCHAIN OBJECTIF", actions = "ACTIONS PRIORITAIRES", why = "POURQUOI",
+        unknown = "non vérifiable", generic = "Aucune rencontre vérifiée : gère la mécanique visible et reste en vie.",
+        safe = "Priorité : évite les dégâts, puis reprends ton activité.",
+        noData = "Donnée non vérifiable dans cette version.",
+        details = "Détails : /mc details", travelHint = "Voyage : /mc travel",
+    },
+    en = {
+        dashboard = "CHARACTER DASHBOARD", overview = "OVERVIEW", equipment = "GEAR", talents = "TALENTS", travel = "TRAVEL",
+        onboarding = "BEFORE YOU GO", during = "DURING COMBAT", after = "AFTER THE TRY",
+        goal = "NEXT GOAL", actions = "PRIORITY ACTIONS", why = "WHY",
+        unknown = "not verifiable", generic = "No verified encounter: handle the visible mechanic and stay alive.",
+        safe = "Priority: avoid damage, then resume your activity.",
+        noData = "Data is not verifiable in this version.",
+        details = "Details: /mc details", travelHint = "Travel: /mc travel",
+    },
+}
+
+function ns:T(key)
+    local language = ns.Data.Text[ns.Locale] or ns.Data.Text.en
+    return language[key] or ns.Data.Text.en[key] or key
+end
