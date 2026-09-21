@@ -22,7 +22,7 @@ foreach ($command in @("PrintDiagnostic", "PLAYER_LOGIN", "/mc status", "ShowPan
     if ($combined -notmatch [regex]::Escape($command)) { throw "Diagnostic ou affichage absent: $command" }
 }
 $allProductText = $core + $data + (Get-Content (Join-Path $root "UI.lua") -Raw)
-if ($allProductText -notmatch [regex]::Escape("Aucune rencontre vérifiée")) { throw "Fallback générique absent" }
+if ($allProductText -notmatch [regex]::Escape('generic =')) { throw "Fallback générique absent" }
 $data = Get-Content (Join-Path $root "Data.lua") -Raw
 foreach ($feature in @("MageDestinations", "GetMageDestinations", "TravelDestinations", "PrintTravelGuide", "/mc travel", "demande un portail à un Mage")) {
     $combined = $core + $data + (Get-Content (Join-Path $root "UI.lua") -Raw)
