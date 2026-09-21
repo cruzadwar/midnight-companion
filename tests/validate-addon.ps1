@@ -26,6 +26,10 @@ foreach ($feature in @("MageDestinations", "GetMageDestinations", "TravelDestina
     $combined = $core + $data + (Get-Content (Join-Path $root "UI.lua") -Raw)
     if ($combined -notmatch [regex]::Escape($feature)) { throw "Aide Mage absente: $feature" }
 }
+$dashboard = $core + (Get-Content (Join-Path $root "UI.lua") -Raw)
+foreach ($feature in @("GetDashboardData", "ONBOARDING", "PROCHAIN OBJECTIF", "ACTIONS PRIORITAIRES", "non vérifiable", 'CreateFrame("Button"', "panel:Hide()")) {
+    if ($dashboard -notmatch [regex]::Escape($feature)) { throw "Tableau de bord incomplet: $feature" }
+}
 
 $ui = Get-Content (Join-Path $root "UI.lua") -Raw
 if ($ui -match "SecureActionButton|BackdropTemplate|StartMoving|StopMovingOrSizing|SetMovable|RegisterForDrag|EnableMouse|SetAttribute") {

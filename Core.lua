@@ -195,6 +195,46 @@ function ns:GetRecommendationData()
     }
 end
 
+function ns:GetDashboardData()
+    self:RefreshIdentity()
+    local role = self.State.role
+    local roleLabel = role == "TANK" and "Tank" or role == "HEALER" and "Soins" or role == "DAMAGER" and "DPS" or "Rôle à confirmer"
+    local roleData = self.Data.Roles[role] or self.Data.Roles.NONE
+    local averageItemLevel = nil
+    if GetAverageItemLevel then
+        local equipped = GetAverageItemLevel()
+        if equipped and equipped > 0 then averageItemLevel = equipped end
+    end
+    local equipmentStatus = averageItemLevel
+        and string.format("Niveau moyen %.1f", averageItemLevel)
+        or "Non vérifiable dans cette version"
+    local onboarding = role == "TANK" and "Avant de partir : prépare une mitigation pour le premier gros impact."
+        or role == "HEALER" and "Avant de partir : repère ta cible prioritaire et garde un soin d'urgence."
+        or role == "DAMAGER" and "Avant de partir : choisis une mécanique à respecter avant ton optimisation."
+        or "Avant de partir : confirme ton rôle de groupe et lis la mécanique principale."
+    return {
+        identity = self:GetIdentityLine(),
+        className = self.State.className or UNKNOWN,
+        specName = self.State.specName or "Spécialisation inconnue",
+        roleLabel = roleLabel,
+        roleData = roleData,
+        goal = roleData.priorities[1] or "Reste en vie et gère la mécanique principale.",
+        actions = {
+            roleData.priorities[1] or "Confirme ton rôle et ta priorité.",
+            roleData.priorities[2] or "Prépare une réponse défensive ou utilitaire.",
+            "Vérifie la mécanique principale avant de chercher l'optimisation.",
+        },
+        onboarding = onboarding,
+        checks = {
+            { label = "Équipement", value = equipmentStatus, why = "Le niveau moyen est un repère, pas un score de performance." },
+            { label = "Talents", value = "À vérifier dans l'onglet Talents", why = "Aucune recommandation de patch n'est inventée." },
+            { label = "Gemmes", value = "Données non vérifiables", why = "La présence et la valeur des gemmes dépendent des API et objets disponibles." },
+            { label = "Enchantements", value = "Données non vérifiables", why = "L'addon ne prétend pas inspecter un enchantement absent de l'API." },
+            { label = "Préparation", value = "À confirmer avant départ", why = "Une préparation utile dépend de la rencontre et du groupe." },
+        },
+    }
+end
+
 function ns:GetContextualRecommendations()
     local roleData = self.Data.Roles[self.State.role] or self.Data.Roles.NONE
     local modeData = self.Data.Modes[self.State.mode] or self.Data.Modes.support

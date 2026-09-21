@@ -8,7 +8,8 @@ Pour diagnostiquer un problème :
 - rechargez avec `/reload` ;
 - testez `/mc help`, `/mc show`, puis `/mc reset` ;
 - après connexion, le message `Midnight Companion est chargé` doit apparaître dans le chat ; utilisez `/mc status` pour confirmer que le TOC et l'interface sont actifs ;
-- `/mc show` affiche toujours le panneau hors combat ; `/mc toggle` le masque ou l'affiche ;
+- `/mc show` affiche toujours le tableau de bord hors combat ; `/mc toggle` le masque ou l'affiche ;
+- le tableau de bord propose les onglets Aperçu, Équipement, Talents et Voyage ; les sections non inspectables indiquent « non vérifiable » au lieu de fabriquer un score ;
 - `/mc report` imprime le dernier rapport dans le chat ;
 - `/mc mage` affiche les téléportations et portails Mage dont l'API confirme la disponibilité ; une autre classe reçoit un message explicite ;
 - `/mc travel` affiche le guide de voyage pour toutes les classes : destinations, portail de groupe, téléportation personnelle et alternatives sans invention ;
